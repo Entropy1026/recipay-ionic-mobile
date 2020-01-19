@@ -1,0 +1,23 @@
+<ion-content>
+  <div class="login-container">
+    <ion-img src="../../../../assets/img/recipaylogo.png"></ion-img>
+    <div class="login-title">
+      Recipay
+    </div>
+    <div class="login-form">
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input [(ngModel)]="username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <div class="login-btn">
+        <ion-button shape="round" expand="full" (click)="onClickLogin()">
+          Sign in
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

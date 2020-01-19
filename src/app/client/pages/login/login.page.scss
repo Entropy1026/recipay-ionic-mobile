@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Sail Regular';
+    src: url('../../../../assets/fonts/Sail-Regular.ttf');
+  }
+
+.login-container {
+    margin: 0 50px 0 50px;
+}
+
+.login-form {
+    margin-top: 50px;
+}
+
+.login-title {
+    display: flex;
+    justify-content: center;
+    font-family: 'Sail Regular';
+    font-size: 70px;
+}
+
+.login-btn {
+    margin-top: 20px;
+}

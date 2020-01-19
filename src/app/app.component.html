@@ -1,0 +1,66 @@
+<ion-app>
+  <ion-menu side="start" contentId="content">
+    <ion-header>
+      <ion-toolbar class="background-image-change">
+        <ng-container *ngIf="user" class="background-image">
+          <ion-item class="background-image-change background-image">
+            <ion-avatar slot="start">
+              <img [src]="user.image" />
+            </ion-avatar>
+            <div class="text-not-blur">
+              <span style="color:white">{{ user.firstname | uppercase}} {{ user.lastname | uppercase }}</span><br>
+              <small style="color:white">{{user.email}}</small>
+            </div>         
+          </ion-item>
+        </ng-container>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/home" routerDirection="root">
+            <ion-icon name="home" slot="start"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/notification" routerDirection="root">
+            <ion-icon name="notifications-outline" slot="start"></ion-icon>
+            <ion-label> Notifications</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/message" routerDirection="root">
+            <ion-icon name="mail" slot="start" ></ion-icon>
+            <ion-label>Messages</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/order" routerDirection="root">
+            <ion-icon name="gift" slot="start"></ion-icon>
+            <ion-label>Orders</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-item-divider></ion-item-divider>
+  
+        
+        <ion-menu-toggle auto-hide="false">
+           <ion-item routerLink="/settings" routerDirection="root">
+            <ion-icon name="settings" slot="start"></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="onClickLogout()">
+            <ion-icon name="log-out" slot="start"></ion-icon>
+            <ion-label>Log-out</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="content"></ion-router-outlet>
+</ion-app>

@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button>
+        <ion-icon name="cart" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" size-sm>
+        <ion-card button="true" style="--ripple-color: #4CAF4F;" (click)="onClickTopSeller()">
+          <ion-card-header>
+            <div style="display: flex; justify-content: center;">
+              <ion-avatar>
+                <ion-img src="http://cdn.shopify.com/s/files/1/0002/1328/6952/collections/best-seller_1200x1200.png?v=1521826271">
+                </ion-img>
+              </ion-avatar>
+            </div>
+            <ion-card-subtitle class="ion-text-center">Top Seller</ion-card-subtitle>
+          </ion-card-header>
+          <!-- <ion-ripple-effect></ion-ripple-effect> -->
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-sm>
+        <ion-card button="true" style="--ripple-color: #4CAF4F;">
+          <ion-card-header>
+            <div style="display: flex; justify-content: center;">
+              <ion-avatar>
+                <ion-img src="https://cdn2.iconfinder.com/data/icons/food-ink/512/shrimp-512.png">
+                </ion-img>
+              </ion-avatar>
+            </div>
+            <ion-card-subtitle class="ion-text-center">Fish</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-sm>
+        <ion-card button="true" style="--ripple-color: #4CAF4F;">
+          <ion-card-header>
+            <div style="display: flex; justify-content: center;">
+              <ion-avatar>
+                <ion-img src="https://cmkt-image-prd.freetls.fastly.net/0.1.0/ps/7364254/910/607/m1/fpnw/wm0/chinese-food-cartoon-30-.jpg?1574705564&s=bdd00aa4063c89d15714af4487294f5f">
+                </ion-img>
+              </ion-avatar>
+            </div>
+            <ion-card-subtitle class="ion-text-center">Pork</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="6" size-sm>
+        <ion-card button="true" style="--ripple-color: #4CAF4F;">
+          <ion-card-header>
+            <div style="display: flex; justify-content: center;">
+              <ion-avatar>
+                <ion-img src="https://image.freepik.com/free-vector/beef-steak-meat-food-icon-flat-vector-illustration_48369-5133.jpg">
+                </ion-img>
+              </ion-avatar>
+            </div>
+            <ion-card-subtitle class="ion-text-center">Beef</ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-card>
+  <div style="margin: 0 16px 0 16px;">
+    <ion-slides [options]="slideOpts" pager>
+      <ion-slide (click)="onClickAd(ad.fileurl)" *ngFor="let ad of ads">
+        <div style="height: 305px;">
+        <div style="padding-top:10px; margin-bottom: 10px;">
+            <b>{{ ad.name }} </b><br>
+            <i><small>{{ ad.description }}</small></i>
+          </div>
+          <div style="height: 200px; display:flex; justify-content: center;">
+            <img  [src]="ad.fileurl"/>
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</ion-card>
+</ion-content>

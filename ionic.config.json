@@ -1,0 +1,8 @@
+{
+  "name": "RecipayMobile",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}
