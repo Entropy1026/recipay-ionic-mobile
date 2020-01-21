@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: TopSellerPage
+  },
+  {
+    path: ':categoryId',
+    loadChildren: () => import('./top-category-detail/top-category-detail.module').then( m => m.TopCategoryDetailPageModule)
   }
 ];
 
@@ -14,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TopSellerPageRoutingModule {}
+export class TopSellerPageRoutingModule { }

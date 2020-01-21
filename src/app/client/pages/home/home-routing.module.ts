@@ -13,16 +13,8 @@ const routes: Routes = [
     loadChildren: () => import('./top-seller/top-seller.module').then( m => m.TopSellerPageModule)
   },
   {
-    path: 'fish-cuisine',
-    loadChildren: () => import('./fish-cuisine/fish-cuisine.module').then( m => m.FishCuisinePageModule)
-  },
-  {
-    path: 'pork-cuisine',
-    loadChildren: () => import('./pork-cuisine/pork-cuisine.module').then( m => m.PorkCuisinePageModule)
-  },
-  {
-    path: 'beef-cuisine',
-    loadChildren: () => import('./beef-cuisine/beef-cuisine.module').then( m => m.BeefCuisinePageModule)
+    path: 'category',
+    loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
   }
 ];
 

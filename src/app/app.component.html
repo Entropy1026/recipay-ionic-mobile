@@ -1,20 +1,40 @@
 <ion-app>
   <ion-menu side="start" contentId="content">
     <ion-header>
-      <ion-toolbar class="background-image-change">
-        <ng-container *ngIf="user" class="background-image">
-          <ion-item class="background-image-change background-image">
+      <ion-toolbar>
+
+        <ng-container *ngIf="user">
+          <ion-item class="navigation-header">
             <ion-avatar slot="start">
               <img [src]="user.image" />
             </ion-avatar>
-            <div class="text-not-blur">
-              <span style="color:white">{{ user.firstname | uppercase}} {{ user.lastname | uppercase }}</span><br>
-              <small style="color:white">{{user.email}}</small>
-            </div>         
+              <ion-label>
+                <span style="color:white">
+                  {{ user.firstname | uppercase }} {{ user.lastname | uppercase }}
+                </span>
+                <small style="color:white">{{ user.email }}</small>
+              </ion-label>
+          </ion-item>
+        </ng-container>
+
+        <ng-container *ngIf="!user">
+          <ion-item class="navigation-header" lines="none">
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label>
+              <h3>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h3>
+              <h3>
+                <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+              </h3>
+            </ion-label>
           </ion-item>
         </ng-container>
       </ion-toolbar>
     </ion-header>
+
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false">
@@ -31,7 +51,7 @@
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
           <ion-item routerLink="/message" routerDirection="root">
-            <ion-icon name="mail" slot="start" ></ion-icon>
+            <ion-icon name="mail" slot="start"></ion-icon>
             <ion-label>Messages</ion-label>
           </ion-item>
         </ion-menu-toggle>
@@ -43,10 +63,9 @@
         </ion-menu-toggle>
 
         <ion-item-divider></ion-item-divider>
-  
-        
+
         <ion-menu-toggle auto-hide="false">
-           <ion-item routerLink="/settings" routerDirection="root">
+          <ion-item routerLink="/settings" routerDirection="root">
             <ion-icon name="settings" slot="start"></ion-icon>
             <ion-label>Settings</ion-label>
           </ion-item>

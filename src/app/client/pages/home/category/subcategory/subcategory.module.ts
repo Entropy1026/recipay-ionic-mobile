@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BeefCuisinePageRoutingModule } from './beef-cuisine-routing.module';
+import { SubcategoryPageRoutingModule } from './subcategory-routing.module';
 
-import { BeefCuisinePage } from './beef-cuisine.page';
+import { SubcategoryPage } from './subcategory.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BeefCuisinePageRoutingModule
+    SubcategoryPageRoutingModule
   ],
-  declarations: [BeefCuisinePage]
+  declarations: [SubcategoryPage]
 })
-export class BeefCuisinePageModule {}
+export class SubcategoryPageModule {}

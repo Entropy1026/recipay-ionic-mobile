@@ -1,18 +1,4 @@
-.separate{
-    margin-top: 50px;
-}
-.background-image-change{
-    --background:url('../assets/img/22.png') !important;   
-    --min-height:150px;
-}
-.background-image{
-    height:150px;
-    background-image:url('../assets/img/22.png')!important;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-size: 300px 216px;
-}
-.text-not-blur{
-    filter: blur(0px) !important;
-    -webkit-filter: blur(0px) !important;
+.navigation-header{
+    --background:url('../assets/img/22.png') !important; 
+    --padding-top: 100px;
 }

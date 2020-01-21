@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { UserService } from './client/api/user.service';
+import { UserService } from './client/app-data/user.service';
 import { User } from './client/models/user';
 import { Router } from '@angular/router';
 

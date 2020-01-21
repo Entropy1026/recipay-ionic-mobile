@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RecipayApiService } from '../../api/recipay-api.service';
 import { Router } from '@angular/router';
+import { retry } from 'rxjs/operators';
+import { Menu } from '../../models/menu';
+import { RecipayDataService } from '../../app-data/recipay-data.service';
 
 @Component({
   selector: 'app-home',
@@ -9,24 +12,40 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
 
+  menu: Menu;
   slideOpts;
   ads;
 
   constructor(
     private recipayApi: RecipayApiService,
-    private router: Router
+    private recipayData: RecipayDataService,
+    private router: Router,
+    private detectRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
+    this.initAds();
+    this.initMenu();
+  }
+
+  initAds() {
     this.slideOpts = {
       autoplay: true,
     };
-    this.recipayApi.getAds().subscribe((ads: any) => {
+    this.recipayApi.getAds().pipe(retry(2)).subscribe((ads: any) => {
       this.ads = ads.data;
+      this.detectRef.detectChanges();
     });
   }
 
-  onClickAd(link: string) {
+  initMenu() {
+    this.recipayApi.getMenu().pipe(retry(2)).subscribe((menu: any) => {
+      this.menu = menu.data;
+      this.detectRef.detectChanges();
+    });
+  }
+
+  onClickAds(link: string) {
     window.open(link);
   }
 
@@ -34,4 +53,8 @@ export class HomePage implements OnInit {
     this.router.navigate(['/home/top-seller']);
   }
 
+  onClickMenu(index: number) {
+    this.recipayData.setSelectedMenu(this.menu[index]);
+    this.router.navigate(['/home/category']);
+  }
 }

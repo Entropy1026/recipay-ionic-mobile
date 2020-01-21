@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, MenuController, AlertController } from '@ionic/angular';
 import { RecipayApiService } from '../../api/recipay-api.service';
-import { UserService } from '../../api/user.service';
+import { UserService } from '../../app-data/user.service';
 import { Router } from '@angular/router';
 
 @Component({

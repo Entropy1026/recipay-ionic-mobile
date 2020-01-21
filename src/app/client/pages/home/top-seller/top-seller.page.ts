@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { RecipayApiService } from 'src/app/client/api/recipay-api.service';
 
 @Component({
   selector: 'app-top-seller',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopSellerPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private recipayApi: RecipayApiService
+  ) { }
 
   ngOnInit() {
+    this.getSubcategory();
+  }
+
+  // onClickCategory() {
+  //   this.router.navigate(['/']);
+  // }
+
+  getSubcategory() {
+    const params = {
+      category: 'fish'
+    };
+    this.recipayApi.getSubcategory(params).subscribe(data => {
+      console.log(data);
+    });
   }
 
 }

@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/top-seller"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recipe Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col class="ion-no-padding">
+        <ion-img
+          src="https://image.freepik.com/free-vector/beef-steak-meat-food-icon-flat-vector-illustration_48369-5133.jpg"
+        ></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h1 class="ion-text-center">Spaghetti</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item-divider>
+          <ion-label>
+            Ingredients
+          </ion-label>
+        </ion-item-divider>
+        <ion-list>
+          <ion-item>
+            ► Tomato Sauces
+          </ion-item>
+          <ion-item>
+            ► Hotdog
+          </ion-item>
+          <ion-item>
+            ► Meat
+          </ion-item>
+        </ion-list>
+
+        <ion-item-divider>
+          <ion-label>
+            Instructions
+          </ion-label>
+        </ion-item-divider>
+        <ion-list>
+          <ion-item>
+            1. Fry pan.
+          </ion-item>
+          <ion-item>
+            2. Distilled some water.
+          </ion-item>
+          <ion-item>
+            3. Cook it.
+          </ion-item>
+        </ion-list>
+
+        <ion-item-divider>
+          <ion-label>
+            Video
+          </ion-label>
+        </ion-item-divider>
+        <ion-list>
+          <ion-item>
+            There is currently no video available.
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-no-padding">
+        <ion-button expand="full">Add to Cart</ion-button>
+      </ion-col>
+      <ion-col class="ion-no-padding">
+        <ion-button expand="full">Checkout</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ng-container *ngIf=""> -->
+  <ion-list>
+    <div class="display-center">
+      <ion-item lines="none">
+        <ion-avatar style="height: 200px; width: 200px;">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-avatar>
+      </ion-item>
+    </div>
+    <ion-item>
+      <ion-label>
+        <h3 class="display-center">
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </h3>
+        <h3 class="display-start mt5">
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+        <h3 class="display-start mt5">
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </p>
+        <h3 class="display-start mt5">
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </h3>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <!-- </ng-container> -->
+</ion-content>
