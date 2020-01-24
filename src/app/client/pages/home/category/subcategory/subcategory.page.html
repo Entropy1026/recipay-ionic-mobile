@@ -1,108 +1,53 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home/category"></ion-back-button>
+    <ng-container *ngIf="category">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home/category"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ category.name }}</ion-title>
+    </ng-container>
+    <ng-container *ngIf="!category">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Cuisine</ion-title>
+    </ng-container>
+
+    <ion-buttons slot="primary">
+      <ion-button (click)="openCart()">
+        <div class="cart-length">{{ cartItemCount | async }}</div>
+        <ion-icon name="cart" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>{{ category.name }}</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-item button="true" [routerLink]="['/home/top-seller', 'asd']">
-      <ion-avatar slot="start">
-        <ion-img
-          src="https://image.freepik.com/free-vector/beef-steak-meat-food-icon-flat-vector-illustration_48369-5133.jpg"
-        >
-        </ion-img>
-      </ion-avatar>
-      <ion-label>Pokémon Yellow</ion-label>
-    </ion-item>
-    <ion-item button="true">
-      <ion-avatar slot="start">
-        <ion-img
-          src="https://image.freepik.com/free-vector/beef-steak-meat-food-icon-flat-vector-illustration_48369-5133.jpg"
-        >
-        </ion-img>
-      </ion-avatar>
-      <ion-label>Mega Man X</ion-label>
-    </ion-item>
-    <ion-item button="true">
-      <ion-avatar slot="start">
-        <ion-img
-          src="https://image.freepik.com/free-vector/beef-steak-meat-food-icon-flat-vector-illustration_48369-5133.jpg"
-        >
-        </ion-img>
-      </ion-avatar>
-      <ion-label>The Legend of Zelda</ion-label>
-    </ion-item>
-  </ion-list>
+    <ng-container *ngIf="subcategories">
+      <ion-item button="true" [routerLink]="['/home/category/subcategory', subcategory.id]" (click)="onClickProduct(i)"
+        *ngFor="let subcategory of subcategories; let i = index;">
+        <ion-avatar slot="start">
+          <ion-img [src]="subcategory.image"></ion-img>
+        </ion-avatar>
+        <ion-label>{{ subcategory.name }}</ion-label>
+      </ion-item>
+    </ng-container>
 
-  <!-- <ng-container *ngIf=""> -->
-  <ion-list>
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <ion-skeleton-text animated></ion-skeleton-text>
-      </ion-avatar>
-      <ion-label>
-        <h3>
-          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-        </h3>
-        <p>
-          <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
-        </p>
-        <p>
-          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-        </p>
-      </ion-label>
-    </ion-item>
+    <ng-container *ngIf="category">
+      <ion-item *ngIf="empty" lines="none">
+        There is currently no {{ category.name }} cuisine.
+      </ion-item>
+    </ng-container>
+    <ng-container *ngIf="!category">
+      <ion-item *ngIf="empty" lines="none">
+        There is currently no dish. 
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="!empty && subcategories.length === 0">
+      <app-loading-list></app-loading-list>
+    </ng-container>
   </ion-list>
 </ion-content>

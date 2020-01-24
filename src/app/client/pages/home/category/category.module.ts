@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { CategoryPageRoutingModule } from './category-routing.module';
 
 import { CategoryPage } from './category.page';
+import { PagesModule } from '../../pages.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PagesModule,
     CategoryPageRoutingModule
   ],
   declarations: [CategoryPage]

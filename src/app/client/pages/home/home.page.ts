@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { retry } from 'rxjs/operators';
 import { Menu } from '../../models/menu';
 import { RecipayDataService } from '../../app-data/recipay-data.service';
+import { BehaviorSubject } from 'rxjs';
+import { CartService } from '../../app-data/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +14,16 @@ import { RecipayDataService } from '../../app-data/recipay-data.service';
 })
 export class HomePage implements OnInit {
 
-  menu: Menu;
+  cartItemCount: BehaviorSubject<number>;
+  menu: Menu[] = [];
+  cart = [];
   slideOpts;
   ads;
 
   constructor(
     private recipayApi: RecipayApiService,
     private recipayData: RecipayDataService,
+    private cartService: CartService,
     private router: Router,
     private detectRef: ChangeDetectorRef
   ) { }
@@ -26,6 +31,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.initAds();
     this.initMenu();
+    this.initCart();
   }
 
   initAds() {
@@ -45,6 +51,11 @@ export class HomePage implements OnInit {
     });
   }
 
+  initCart() {
+    this.cart = this.cartService.getCart();
+    this.cartItemCount = this.cartService.getCartItemCount();
+  }
+
   onClickAds(link: string) {
     window.open(link);
   }
@@ -57,4 +68,9 @@ export class HomePage implements OnInit {
     this.recipayData.setSelectedMenu(this.menu[index]);
     this.router.navigate(['/home/category']);
   }
+
+  openCart() {
+    this.router.navigate(['/home/cart']);
+  }
+
 }

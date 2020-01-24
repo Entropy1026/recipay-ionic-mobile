@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { SubcategoryPageRoutingModule } from './subcategory-routing.module';
 
 import { SubcategoryPage } from './subcategory.page';
+import { PagesModule } from '../../../pages.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PagesModule,
     SubcategoryPageRoutingModule
   ],
   declarations: [SubcategoryPage]

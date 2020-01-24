@@ -5,6 +5,8 @@ import { Menu } from 'src/app/client/models/menu';
 import { Category } from 'src/app/client/models/category';
 import { retry } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { CartService } from 'src/app/client/app-data/cart.service';
 
 @Component({
   selector: 'app-category',
@@ -13,6 +15,8 @@ import { Router } from '@angular/router';
 })
 export class CategoryPage implements OnInit {
 
+  cartItemCount: BehaviorSubject<number>;
+  cart = [];
   menu: Menu;
   categories: Category[] = [];
   empty = false;
@@ -20,12 +24,14 @@ export class CategoryPage implements OnInit {
   constructor(
     private recipayApi: RecipayApiService,
     private recipayData: RecipayDataService,
+    private cartService: CartService,
     private router: Router,
   ) { }
 
   ngOnInit() {
     this.initToolbarTitle();
     this.initCategoryList();
+    this.initCart();
   }
 
   initToolbarTitle() {
@@ -34,19 +40,28 @@ export class CategoryPage implements OnInit {
 
   initCategoryList() {
     const params = {
-      type: this.menu.name
+      type: this.menu ? this.menu.name : null
     };
     this.recipayApi.getCategory(params).pipe(retry(2)).subscribe((categories: any) =>{
       this.categories = categories.data;
-      if(!this.categories) {
+      if (!this.categories) {
         this.empty = true;
       }
     });
   }
 
+  initCart() {
+    this.cart = this.cartService.getCart();
+    this.cartItemCount = this.cartService.getCartItemCount();
+  }
+
   onClickCategory(index: number) {
     this.recipayData.setSelectedCategory(this.categories[index]);
     this.router.navigate(['/home/category/subcategory']);
+  }
+
+  openCart() {
+    this.router.navigate(['/home/cart']);
   }
 
 }

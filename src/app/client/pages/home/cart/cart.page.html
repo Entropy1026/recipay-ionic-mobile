@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ng-container *ngIf="cart">
+      <ion-item button="true" *ngFor="let c of cart; let i = index;">
+        <ion-avatar slot="start">
+          <ion-img [src]="c.image" >
+          </ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2> {{ c.name }} </h2>
+          <!-- <h3 style="word-wrap: break-word;"> {{ c.description }} </h3> -->
+          <!-- <h4> Available variant: {{ category.count }} </h4> -->
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <!-- <ng-container *ngIf="menu">
+      <ion-item *ngIf="empty" lines="none" >
+        There is currently no {{ menu.name }} cuisine. 
+      </ion-item>
+    </ng-container>
+    <ng-container *ngIf="!menu">
+      <ion-item *ngIf="empty" lines="none" >
+        There is currently no dish. 
+      </ion-item>
+    </ng-container> -->
+
+    <!-- <ng-container *ngIf="!empty && categories.length === 0"> -->
+      <!-- <app-loading-list></app-loading-list> -->
+    <!-- </ng-container> -->
+  </ion-list>
+
+</ion-content>
