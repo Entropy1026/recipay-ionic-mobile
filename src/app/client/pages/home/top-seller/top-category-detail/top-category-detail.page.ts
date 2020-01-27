@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-top-category-detail',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopCategoryDetailPage implements OnInit {
 
+
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

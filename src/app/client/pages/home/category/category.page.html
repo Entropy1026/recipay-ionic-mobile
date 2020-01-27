@@ -28,7 +28,7 @@
     <ng-container *ngIf="categories">
       <ion-item button="true" *ngFor="let category of categories; let i = index;" (click)="onClickCategory(i)" >
         <ion-avatar slot="start">
-          <ion-img src="https://image.freepik.com/free-vector/beef-steak-meat-food-icon-flat-vector-illustration_48369-5133.jpg" >
+          <ion-img [src]="category.image" >
           </ion-img>
         </ion-avatar>
         <ion-label>
@@ -39,15 +39,13 @@
       </ion-item>
     </ng-container>
 
-    <ng-container *ngIf="menu">
-      <ion-item *ngIf="empty" lines="none" >
-        There is currently no {{ menu.name }} cuisine. 
-      </ion-item>
-    </ng-container>
-    <ng-container *ngIf="!menu">
-      <ion-item *ngIf="empty" lines="none" >
-        There is currently no dish. 
-      </ion-item>
+    <ng-container *ngIf="empty">
+      <div class="display-center mt-5">
+        <ion-chip color="danger">
+          <ion-icon name="alert"></ion-icon>
+          <ion-label>THERE IS CURRENTLY NO CUISINE AVAILABLE.</ion-label>
+        </ion-chip>
+      </div>
     </ng-container>
 
     <ng-container *ngIf="!empty && categories.length === 0">

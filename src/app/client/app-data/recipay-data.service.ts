@@ -18,6 +18,9 @@ export class RecipayDataService {
   selectedProduct = new BehaviorSubject<Subcategory>(null);
   getSelectedProduct = this.selectedProduct.asObservable();
 
+  selectedTopSeller = new BehaviorSubject<Subcategory>(null);
+  getSelectedTopSeller = this.selectedTopSeller.asObservable();
+
   constructor() { }
 
   setSelectedMenu(menu: Menu) {
@@ -30,6 +33,10 @@ export class RecipayDataService {
 
   setSelectedProduct(selectedProduct: Subcategory) {
     this.selectedProduct.next(selectedProduct);
+  }
+
+  setSelectedTopSeller(selectedTopSeller: Subcategory) {
+    this.selectedTopSeller.next(selectedTopSeller);
   }
 
 }

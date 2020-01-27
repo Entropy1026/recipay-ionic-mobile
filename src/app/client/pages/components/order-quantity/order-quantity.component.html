@@ -1,0 +1,18 @@
+<div style="margin-top:10%;margin-bottom: 20%;">
+  <div class="display-center" style="align-items: center; padding-top: 10px;">
+    <div class="mr3">
+      Quantity:
+    </div>
+    <ion-button color="light" (click)="minus()">-</ion-button>
+    <div class="m5">
+      <span>{{ quantity }}</span>
+    </div>
+    <ion-button color="light" (click)="add()">+</ion-button>
+  </div>
+  <ion-item-divider></ion-item-divider>
+  <div class="display-center mt2">
+    <ion-button (click)="dismiss()">
+      Confirm
+    </ion-button>
+  </div>
+</div>

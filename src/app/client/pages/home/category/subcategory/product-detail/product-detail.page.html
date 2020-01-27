@@ -28,9 +28,9 @@
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col class="ion-no-padding">
-          <div style="position: relative; width: 100%; height: 150px;">
-            <ion-img  [src]="product.image" style="width: 100% !important; height: 140px !important;"></ion-img >
-          </div>
+          <!-- <div style="position: relative; width: 100%; height: 150px;"> -->
+            <ion-img  [src]="product.image"></ion-img >
+          <!-- </div> -->
         </ion-col>
       </ion-row>
       <ion-row>
@@ -41,27 +41,29 @@
       <ion-row>
         <ion-col>
           <ion-item-divider>
-            <ion-label>
+            <ion-label (click)="collapseIngredient()">
               Ingredients
             </ion-label>
           </ion-item-divider>
-          <ion-list>
+          <ion-list  [ngClass]="ingredientShow ? 'show':'hide'" id="ingredients">
             <ion-item *ngFor="let ingredient of product.ingredients">
-              ► {{ ingredient.name }}
+              <ion-label>{{ ingredient.qty | number:'1.0-0' }} {{ ingredient.name }} {{ ingredient.unit }}</ion-label>
+              <ion-checkbox slot="start" color="primary"></ion-checkbox>
             </ion-item>
           </ion-list>
   
           <ion-item-divider>
-            <ion-label>
+            <ion-label (click)="collapseInstruct()">
               Instructions
             </ion-label>
           </ion-item-divider>
-          <ion-list>
-            <ion-item *ngFor="let instruction of textInstruction; let i = index;">
-              {{ i+1 }}. {{ instruction }}.
-            </ion-item>
-          </ion-list>
-  
+            <ion-list [ngClass]="instructionShow ? 'show':'hide'" id="instructions">
+              <ion-item *ngFor="let instruction of textInstruction; let i = index;">
+                <span style="display: flex; flex-wrap: wrap;">
+                  {{ i+1 }}. {{ instruction }}.
+                </span>
+              </ion-item>
+            </ion-list>
           <ion-item-divider>
             <ion-label>
               Video
@@ -72,14 +74,19 @@
               There is currently no video available.
             </ion-item>
           </ion-list>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="ion-no-padding">
-          <ion-button expand="full">Add to Cart</ion-button>
-        </ion-col>
-        <ion-col class="ion-no-padding">
-          <ion-button expand="full">Checkout</ion-button>
+          <ion-item-divider>
+            <ion-label>
+              Comments
+            </ion-label>
+          </ion-item-divider>
+          <ion-list>
+            <ion-item *ngFor="let comment of product.comments; let i = index;">
+              <ion-avatar slot="start">
+                <ion-img [src]="comment.image"></ion-img>
+              </ion-avatar>
+              <ion-label>{{ comment.name }}</ion-label>
+            </ion-item>
+          </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -6,6 +6,7 @@ import { Subcategory } from '../../../../models/subcategory';
 import { BehaviorSubject } from 'rxjs';
 import { CartService } from 'src/app/client/app-data/cart.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/client/app-data/user.service';
 
 @Component({
   selector: 'app-subcategory',
@@ -24,6 +25,7 @@ export class SubcategoryPage implements OnInit {
     private recipayApi: RecipayApiService,
     private recipayData: RecipayDataService,
     private cartService: CartService,
+    private userService: UserService,
     private router: Router,
   ) { }
 
@@ -38,18 +40,25 @@ export class SubcategoryPage implements OnInit {
   }
 
   initCart() {
-    this.cart = this.cartService.getCart();
+    this.cartService.getCart.subscribe(cart => this.cart = cart);
     this.cartItemCount = this.cartService.getCartItemCount();
   }
 
   getSubcategoryList() {
+    let id: any;
+    this.userService.getUser.subscribe(res => {
+      id = res.id;
+    });
     const params = {
-      category: this.category ? this.category.id : null
+      category: this.category ? this.category.id : null,
+      user_id: id
     };
-    this.recipayApi.getSubcategory(params).subscribe((response: any) => {
-      this.subcategories = response.data;
-      if (!this.subcategories) {
-        this.empty = true;
+    this.recipayApi.getSubcategory(params).subscribe((res: any) => {
+      if (!res.error) {
+        this.subcategories = res.data;
+        if (!this.subcategories) {
+          this.empty = true;
+        }
       }
     });
   }

@@ -1,0 +1,11 @@
+@import '~animate.css/animate.min.css';
+
+.hide{
+display:block;
+transition: all .3s ease-out;
+}
+
+.show {
+ display:none;   
+ transition: all .3s ease-in;
+}

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Order</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ng-container *ngIf="!empty && orders.length === 0">
+            <app-loading-list></app-loading-list>
+          </ng-container>
+
+          <ng-container *ngIf="orders">
+            <ng-container style="height:500px;overflow-y:auto;">
+              <ion-item *ngFor="let o of orders; let i = index;">
+                <!-- <ion-avatar slot="start">
+                  <ion-img [src]="c.image"> </ion-img>
+                </ion-avatar> -->
+             
+                <ion-label>
+                  <div style="display:flex; justify-content:flex-start;"><small style="color:green"> <b>ORDER ID: {{o.id}}</b></small></div>
+                  <div *ngFor="let items of o.items" style="display: flex; justify-content: space-between; padding-top:10px;">
+                    <div style="display: flex; justify-content: flex-end;">
+                      <small>{{ items.name }} </small>
+                    </div>
+                    <div>
+                      <small>QTY {{ items.qty }}</small> 
+                      <small>PRICE {{ items.price }} </small>
+                    </div>
+                  </div>
+                  <br />
+                  <div style="display:flex; justify-content:flex-end; padding-top:10px;">
+                    <div>
+                      <small >TOTAL: </small>
+                      <small style="color:red">{{ o.payment.amount }}</small>
+                    </div>
+                  </div>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <span class="ion-text-right">
+                      <small>Paid Using: </small>
+                      <small>{{ o.payment.method }}</small>
+                    </span>
+                  </div>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <div>
+                      <small>Delivery Fee Added</small>
+                    </div>
+                  </div>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <span class="ion-text-right">
+                      <small>Delivery: </small>
+                      <small>{{ o.delivery_datetime.date | date:'MMM d, y, h:mm'}}</small>
+                    </span>
+                  </div>
+                    <div button="true" [routerLink]="['/home']" style="display:flex; justify-content:flex-end;padding-top:10px;">
+                       <small style="color:green; cursor: pointer;">View Full Information</small>
+                    </div>
+                  <!-- <h3 style="word-wrap: break-word;"> {{ c.description }} </h3> -->
+                  <!-- <h4> Available variant: {{ category.count }} </h4> -->
+                </ion-label>
+              </ion-item>
+            </ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="empty">
+            <div class="display-center mt-5">
+              <ion-chip color="danger">
+                <ion-icon name="alert"></ion-icon>
+                <ion-label>NO ORDERS FOUND</ion-label>
+              </ion-chip>
+            </div>
+          </ng-container>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

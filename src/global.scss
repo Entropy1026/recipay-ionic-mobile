@@ -61,6 +61,14 @@
   z-index: 10;
 }
 
+.modal-size {
+  --height: 28%;
+  --width: 70%;
+  --border-radius: 10px;
+  padding: 25px;
+}
+
+
 /* css utilities */
 
 .mt1 {
@@ -126,3 +134,20 @@
 .ml5 {
   margin-left: 15px !important;
 }
+
+.m1 {
+  margin: 3px !important;
+}
+.m2 {
+  margin: 6px !important;
+}
+.m3 {
+  margin: 9px !important;
+}
+.m4 {
+  margin: 12px !important;
+}
+.m5 {
+  margin: 15px !important;
+}
+

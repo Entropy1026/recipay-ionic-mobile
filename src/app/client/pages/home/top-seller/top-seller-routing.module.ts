@@ -9,7 +9,7 @@ const routes: Routes = [
     component: TopSellerPage
   },
   {
-    path: ':categoryId',
+    path: ':topsellerId',
     loadChildren: () => import('./top-category-detail/top-category-detail.module').then( m => m.TopCategoryDetailPageModule)
   }
 ];

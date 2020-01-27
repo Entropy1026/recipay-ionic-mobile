@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TopSellerPageRoutingModule } from './top-seller-routing.module';
 
 import { TopSellerPage } from './top-seller.page';
+import { PagesModule } from '../../pages.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TopSellerPageRoutingModule
+    TopSellerPageRoutingModule,
+    PagesModule
   ],
   declarations: [TopSellerPage]
 })

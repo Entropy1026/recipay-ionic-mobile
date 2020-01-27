@@ -42,16 +42,18 @@ export class CategoryPage implements OnInit {
     const params = {
       type: this.menu ? this.menu.name : null
     };
-    this.recipayApi.getCategory(params).pipe(retry(2)).subscribe((categories: any) =>{
-      this.categories = categories.data;
-      if (!this.categories) {
-        this.empty = true;
+    this.recipayApi.getCategory(params).pipe(retry(2)).subscribe((res: any) => {
+      if (!res.error) {
+        this.categories = res.data;
+        if (!this.categories) {
+          this.empty = true;
+        }
       }
     });
   }
 
   initCart() {
-    this.cart = this.cartService.getCart();
+    this.cartService.getCart.subscribe(cart => this.cart = cart);
     this.cartItemCount = this.cartService.getCartItemCount();
   }
 

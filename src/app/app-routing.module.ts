@@ -10,6 +10,22 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./client/pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'order',
+    loadChildren: () => import('./client/pages/sidemenu/order/order.module').then( m => m.OrderPageModule)
+  },
+  {
+    path: 'notification',
+    loadChildren: () => import('./client/pages/sidemenu/notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'messages',
+    loadChildren: () => import('./client/pages/sidemenu/messages/messages.module').then( m => m.MessagesPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./client/pages/sidemenu/settings/settings.module').then( m => m.SettingsPageModule)
   }
 ];
 

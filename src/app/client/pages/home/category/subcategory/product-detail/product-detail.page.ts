@@ -5,6 +5,10 @@ import { Subcategory } from 'src/app/client/models/subcategory';
 import { BehaviorSubject } from 'rxjs';
 import { CartService } from 'src/app/client/app-data/cart.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/client/app-data/user.service';
+import { ModalController } from '@ionic/angular';
+import { OrderQuantityComponent } from 'src/app/client/pages/components/order-quantity/order-quantity.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,12 +21,16 @@ export class ProductDetailPage implements OnInit {
   cartItemCount: BehaviorSubject<number>;
   product: Subcategory;
   textInstruction = [];
+  instructionShow: boolean = false;
+  ingredientShow: boolean = false;
 
   constructor(
     private recipayApi: RecipayApiService,
     private recipayData: RecipayDataService,
     private cartService: CartService,
     private router: Router,
+    private userService: UserService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -31,7 +39,7 @@ export class ProductDetailPage implements OnInit {
   }
 
   initCart() {
-    this.cart = this.cartService.getCart();
+    this.cartService.getCart.subscribe(cart => this.cart = cart);
     this.cartItemCount = this.cartService.getCartItemCount();
   }
 
@@ -40,16 +48,45 @@ export class ProductDetailPage implements OnInit {
       this.product = product;
       if (this.product) {
         const stringToSplit = this.product.text_instruction;
-        console.log(this.product);
-        console.log(stringToSplit);
         this.textInstruction = stringToSplit.split('.');
       }
     });
   }
 
+  collapseInstruct() {
+    this.instructionShow = !this.instructionShow;
+  }
+
+  collapseIngredient() {
+    this.ingredientShow = !this.ingredientShow;
+  }
+
   addToCart(product) {
-    this.cartService.setLastScreen('product-detail');
-    this.cartService.addProduct(product);
+    this.modalController.create({
+      component: OrderQuantityComponent,
+      cssClass: 'modal-size'
+    }).then(async overlay => {
+      overlay.present();
+
+      if (overlay.onWillDismiss()) {
+        const data = await overlay.onWillDismiss();
+        if (data && data.data && data.data.quantity) {
+          this.userService.getUser.subscribe(
+            user => {
+              if (user && user.id) {
+                const params = {
+                  product_id: product.id,
+                  user_id: user.id,
+                  quantity: data.data.quantity
+                };
+                this.cartService.addtoCart(params);
+              }
+            }
+          );
+        }
+      }
+
+    });
   }
 
   openCart() {

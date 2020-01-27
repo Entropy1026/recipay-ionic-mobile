@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RecipayApiService } from 'src/app/client/api/recipay-api.service';
+import { RecipayDataService } from 'src/app/client/app-data/recipay-data.service';
 
 @Component({
   selector: 'app-top-seller',
@@ -9,26 +10,32 @@ import { RecipayApiService } from 'src/app/client/api/recipay-api.service';
 })
 export class TopSellerPage implements OnInit {
 
+  topSeller = [];
+  empty = false;
+
   constructor(
     private router: Router,
-    private recipayApi: RecipayApiService
+    private recipayApi: RecipayApiService,
+    private recipayData: RecipayDataService,
   ) { }
 
   ngOnInit() {
     this.getSubcategory();
   }
 
-  // onClickCategory() {
-  //   this.router.navigate(['/']);
-  // }
-
   getSubcategory() {
-    const params = {
-      category: 'fish'
-    };
-    this.recipayApi.getSubcategory(params).subscribe(data => {
-      console.log(data);
+    this.recipayApi.getTopSeller().subscribe(res => {
+      if (!res.error) {
+        this.topSeller = res.data;
+        if (!this.topSeller) {
+          this.empty = true;
+        }
+      }
     });
+  }
+
+  onClickTopSeller(index: number) {
+    this.recipayData.setSelectedProduct(this.topSeller[index]);
   }
 
 }

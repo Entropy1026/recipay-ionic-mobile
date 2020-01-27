@@ -11,7 +11,7 @@
               <ion-label>
                 <span style="color:white">
                   {{ user.firstname | uppercase }} {{ user.lastname | uppercase }}
-                </span>
+                </span><br>
                 <small style="color:white">{{ user.email }}</small>
               </ion-label>
           </ion-item>
@@ -50,7 +50,7 @@
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
-          <ion-item routerLink="/message" routerDirection="root">
+          <ion-item routerLink="/messages" routerDirection="root">
             <ion-icon name="mail" slot="start"></ion-icon>
             <ion-label>Messages</ion-label>
           </ion-item>

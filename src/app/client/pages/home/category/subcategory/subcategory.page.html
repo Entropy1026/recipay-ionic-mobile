@@ -35,17 +35,15 @@
       </ion-item>
     </ng-container>
 
-    <ng-container *ngIf="category">
-      <ion-item *ngIf="empty" lines="none">
-        There is currently no {{ category.name }} cuisine.
-      </ion-item>
+    <ng-container *ngIf="empty">
+      <div class="display-center mt-5">
+        <ion-chip color="danger">
+          <ion-icon name="alert"></ion-icon>
+          <ion-label>THERE IS CURRENTLY NO CUISINE AVAILABLE.</ion-label>
+        </ion-chip>
+      </div>
     </ng-container>
-    <ng-container *ngIf="!category">
-      <ion-item *ngIf="empty" lines="none">
-        There is currently no dish. 
-      </ion-item>
-    </ng-container>
-
+    
     <ng-container *ngIf="!empty && subcategories.length === 0">
       <app-loading-list></app-loading-list>
     </ng-container>
