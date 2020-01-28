@@ -50,7 +50,7 @@
         </ion-list>
 
         <div *ngIf="cart.length !== 0">
-          <ion-button expand="full" (click)="onClickCheckOut()">Checkout</ion-button>
+          <ion-button expand="full" [routerLink]="['/home/cart/checkout']">PAY</ion-button>
         </div>
       </ion-col>
     </ion-row>

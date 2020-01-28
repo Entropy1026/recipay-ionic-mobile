@@ -10,7 +10,8 @@ export class RecipayApiService {
 
   headers = new HttpHeaders({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
   // baseUrl = 'https://staging-recipay-admin-api.herokuapp.com/public/';
-  baseUrl = 'http://localhost/staging-recipay-admin-api/public/';
+  // baseUrl = 'http://localhost/staging-recipay-admin-api/public/';
+  baseUrl = 'http://192.168.1.5/staging-recipay-admin-api/public/';
 
   constructor(private http: HttpClient) { }
 
@@ -53,5 +54,10 @@ export class RecipayApiService {
   getOrders(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'open/order/myorder', params, { headers: this.headers });
   }
+
+  order(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/order/order', params, { headers: this.headers });
+  }
+
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController, AlertController } from '@ionic/angular';
+import { LoadingController, MenuController, AlertController, ToastController } from '@ionic/angular';
 import { RecipayApiService } from '../../api/recipay-api.service';
 import { UserService } from '../../app-data/user.service';
 import { Router } from '@angular/router';
@@ -20,6 +20,7 @@ export class LoginPage implements OnInit {
     private loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
     private alertCtrl: AlertController,
+    public toastCtrl: ToastController,
     private userService: UserService,
     private router: Router
   ) { }
@@ -52,11 +53,21 @@ export class LoginPage implements OnInit {
           overlay.present();
         });
       } else {
-        this.userService.setUser(res.data);
-        this.router.navigate(['/home']);
+        if (res.data.user_type === 'client') {
+          this.userService.setUser(res.data);
+          this.router.navigate(['/home']);
+        }
+        if (res.data.user_type === 'carrier') {
+          this.userService.setUser(res.data);
+          this.router.navigate(['/carrier']);
+        }
       }
     },
       (err) => {
+        this.toastCtrl.create({
+          message: 'Error:' + err,
+          duration: 2000
+        });
         this.loading.dismiss();
       },
       () => {
