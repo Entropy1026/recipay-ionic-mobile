@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="schedule">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <ion-label>Waiting Confirmation</ion-label>
+        <!-- <ion-badge>{{ order.items.length }}</ion-badge> -->
+      </ion-tab-button>
+
+      <ion-tab-button tab="speakers">
+        <ion-icon name="logo-dropbox"></ion-icon>
+        <ion-label>Preparing</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="map">
+        <ion-icon name="bicycle"></ion-icon>
+        <ion-label>Delivery</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="about">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <ion-label>Confirm Order</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

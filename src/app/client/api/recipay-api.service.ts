@@ -59,5 +59,8 @@ export class RecipayApiService {
     return this.http.post(this.baseUrl + 'open/order/order', params, { headers: this.headers });
   }
 
+  receiveOrder(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/order/receiveOrder', params, { headers: this.headers });
+  }
 
 }

@@ -3,45 +3,61 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Order</ion-title>
+    <ion-title>Home</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
-    <ion-row style="background-color:#e0e0e0;padding-bottom:5px;padding-top:-15px">
-      <ion-col [ngClass]="!isPending? 'selected':'unselected'" (click)="selectTab('pending')"style="display: flex;justify-content: center;background-color:#fefefe">Incompleted Orders</ion-col>
-      <ion-col [ngClass]="!isPending? 'unselected':'selected'" (click)="selectTab('complete')"style="display: flex;justify-content: center;padding-left:5px;background-color:#fefefe">Completed Orders</ion-col>
+    <ion-row
+      style="background-color:#e0e0e0;padding-bottom:5px;padding-top:-15px"
+    >
+      <ion-col
+        [ngClass]="!isPending? 'selected':'unselected'"
+        (click)="selectTab('pending')"
+        style="display: flex;justify-content: center;background-color:#fefefe"
+        >Pending Delivery</ion-col
+      >
+      <ion-col
+        [ngClass]="!isPending? 'unselected':'selected'"
+        (click)="selectTab('complete')"
+        style="display: flex;justify-content: center;padding-left:5px;background-color:#fefefe"
+        >Completed Delivery</ion-col
+      >
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-list>
-          <ng-container *ngIf="!empty && orders.length === 0">
+          <ng-container *ngIf="!empty && deliveries.length === 0">
             <app-loading-list></app-loading-list>
           </ng-container>
 
-          <ng-container *ngIf="orders">
-            <ng-container style="height:500px;overflow-y:auto;">
+          <ng-container *ngIf="deliveries.length > 0">
+            <ng-container style="height:500px;overflow-y:auto;" *ngIf="filteredOrders.length > 0">
               <ion-item *ngFor="let o of filteredOrders; let i = index;">
                 <!-- <ion-avatar slot="start">
                   <ion-img [src]="c.image"> </ion-img>
                 </ion-avatar> -->
-             
+
                 <ion-label>
-                  <div style="display:flex; justify-content:space-between;"><small style="color:green"> <b>ORDER ID: {{o.id}}</b></small><small style="color:green"> <b>{{o.status}}</b></small></div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <small style="color:green"> <b>ORDER ID: {{o.id}}</b></small
+                    ><small style="color:green"> <b>{{o.status}}</b></small>
+                  </div>
                   <div *ngFor="let items of o.items" style="display: flex; justify-content: space-between; padding-top:10px;">
                     <div style="display: flex; justify-content: flex-end;">
                       <small>{{ items.name }} </small>
                     </div>
                     <div>
-                      <small>QTY {{ items.qty }}</small> 
+                      <small>QTY {{ items.qty }}</small>
                       <small>PRICE {{ items.price }} </small>
                     </div>
                   </div>
                   <br />
                   <div style="display:flex; justify-content:flex-end; padding-top:10px;">
                     <div>
-                      <small >TOTAL: </small>
+                      <small>TOTAL: </small>
                       <small style="color:red">{{ o.payment.amount }}</small>
                     </div>
                   </div>
@@ -59,23 +75,21 @@
                   <div style="display:flex; justify-content:flex-end;">
                     <span class="ion-text-right">
                       <small>Delivery: </small>
-                      <small>{{ o.delivery_datetime.date | date:'MMM d, y, h:mm'}}</small>
+                      <small>{{ o.delivery_datetime.date | date:'MMM d, y,h:mm'}}</small>
                     </span>
                   </div>
-                  <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Delivered'">
-                     <ion-button>
-                            Rate
-                     </ion-button>
-                     <ion-button>
-                            Comment
-                      </ion-button>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <span class="ion-text-right">
+                      <small>Address: </small>
+                      <small>{{ o.billinginfo.Address }}</small>
+                    </span>
                   </div>
-                  <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Waiting User Confirmation'">
-                    <ion-button (click)="onClickReceiveOrder(i)">
-                           Recieve Order
+                  <div class="display-end" *ngIf="o.status === 'Waiting User Confirmation' || o.status === 'Cancelled' ">
+                    <ion-button (click)="onClickCompleteDelivery(i)">
+                      Complete Delivery
                     </ion-button>
-                 </div>
-                    <!-- <div button="true" [routerLink]="['/order/order-detail/tabs']" style="display:flex; justify-content:flex-end;padding-top:10px;">
+                  </div>
+                  <!-- <div button="true" [routerLink]="['/order/order-detail/tabs']" style="display:flex; justify-content:flex-end;padding-top:10px;">
                        <small style="color:green; cursor: pointer;" (click)="onClickOrderDetail(i)">View Full Information</small>
                     </div> -->
                   <!-- <h3 style="word-wrap: break-word;"> {{ c.description }} </h3> -->
@@ -93,7 +107,6 @@
               </ion-chip>
             </div>
           </ng-container>
-
         </ion-list>
       </ion-col>
     </ion-row>

@@ -33,47 +33,74 @@ export class LoginPage implements OnInit {
   }
 
   onClickLogin() {
-    this.loadingCtrl.create({
-      message: 'Signing in...'
-    }).then(overlay => {
-      this.loading = overlay;
-      overlay.present();
-    });
+    if (this.validate()) {
+      this.loadingCtrl.create({
+        message: 'Signing in...'
+      }).then(overlay => {
+        this.loading = overlay;
+        overlay.present();
+      });
 
-    const params = {
-      username: this.username.trim(),
-      password: this.password.trim()
-    };
-    this.recipayApi.login(params).subscribe(res => {
-      if (res.error) {
-        this.alertCtrl.create({
-          message: res.message,
-          buttons: ['Okay']
-        }).then(overlay => {
-          overlay.present();
-        });
-      } else {
-        if (res.data.user_type === 'client') {
-          this.userService.setUser(res.data);
-          this.router.navigate(['/home']);
-        }
-        if (res.data.user_type === 'carrier') {
-          this.userService.setUser(res.data);
-          this.router.navigate(['/carrier']);
-        }
-      }
-    },
-      (err) => {
-        this.toastCtrl.create({
-          message: 'Error:' + err,
-          duration: 2000
-        });
-        this.loading.dismiss();
-      },
-      () => {
-        this.loading.dismiss();
-      }
-    );
+      const params = {
+        username: this.username.trim(),
+        password: this.password.trim()
+      };
+
+      setTimeout(() => {
+        this.recipayApi.login(params).subscribe(res => {
+          if (res.error) {
+            this.alertCtrl.create({
+              message: res.message,
+              buttons: ['Okay']
+            }).then(overlay => {
+              overlay.present();
+            });
+          } else {
+            if (res.data.user_type === 'client') {
+              this.userService.setUser(res.data);
+              this.router.navigate(['/home']);
+            }
+            if (res.data.user_type === 'carrier') {
+              this.userService.setUser(res.data);
+              this.router.navigate(['/carrier']);
+            }
+          }
+        },
+          (err) => {
+            this.toastCtrl.create({
+              message: 'Error:' + err,
+              duration: 2000
+            });
+            this.loading.dismiss();
+          },
+          () => {
+            this.loading.dismiss();
+          }
+        );
+      }, 1000);
+    }
+  }
+
+  validate() {
+    let valid = true;
+    if (!this.username) {
+      this.toastCtrl.create({
+        message: 'Please enter username.',
+        duration: 2000
+      }).then(overlay => {
+        overlay.present();
+      });
+      valid = false;
+    } else if (!this.password) {
+      this.toastCtrl.create({
+        message: 'Please enter password.',
+        duration: 2000
+      }).then(overlay => {
+        overlay.present();
+      });
+      valid = false;
+    }
+    return valid;
   }
 
 }

@@ -26,6 +26,18 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./client/pages/sidemenu/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'carrier',
+    loadChildren: () => import('./carrier/pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'carrier/notification',
+    loadChildren: () => import('./carrier/pages/sidemenu/notification/notification.module').then( m => m.NotificationPageModule)
+  },
+  {
+    path: 'carrier/settings',
+    loadChildren: () => import('./carrier/pages/sidemenu/settings/settings.module').then( m => m.SettingsPageModule)
   }
 ];
 

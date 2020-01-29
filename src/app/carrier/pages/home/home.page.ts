@@ -1,51 +1,61 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipayApiService } from 'src/app/client/api/recipay-api.service';
+import { CarrierApiService } from '../../api/carrier-api.service';
 import { RecipayDataService } from 'src/app/client/app-data/recipay-data.service';
-import { User } from 'src/app/client/models/user';
 import { UserService } from 'src/app/client/app-data/user.service';
+import { User } from 'src/app/client/models/user';
 import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: './order.page.html',
-  styleUrls: ['./order.page.scss'],
+  selector: 'app-home',
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
-export class OrderPage implements OnInit {
+export class HomePage implements OnInit {
 
   user: User;
   empty = false;
-  orders = [];
+  deliveries = [];
   filteredOrders = [];
   isPending = false;
 
   constructor(
-    private recipayApi: RecipayApiService,
-    private recipayData: RecipayDataService,
+    private carrierApi: CarrierApiService,
     private userData: UserService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
-    this.initOrders();
+    this.initMyDelivery();
+    this.initUser();
   }
 
-  initOrders() {
+  ionViewWillEnter() {
+    this.initMyDelivery();
+    this.initUser();
+  }
+
+  initUser() {
     this.userData.getUser.subscribe(user => {
       this.user = user;
     });
-    const params = {
-      user_id: this.user.id
-    };
-    this.recipayApi.getOrders(params).subscribe(res => {
-      if (!res.error) {
-        this.orders = res.data || [];
-        this.filterOrders('Not-Delivered');
-        if (this.orders.length === 0) {
-          this.empty = true;
+  }
+
+  initMyDelivery() {
+    if (this.user) {
+      let params = {
+        user_id: this.user.id
+      };
+      this.carrierApi.getMyDelivery(params).subscribe(res => {
+        if (!res.error) {
+          this.deliveries = res.data;
+          this.filterOrders('Not-Delivered');
+          if (this.deliveries.length === 0) {
+            this.empty = true;
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   selectTab(status: any) {
@@ -63,7 +73,7 @@ export class OrderPage implements OnInit {
     let data;
     data = [];
     this.filteredOrders = [];
-    this.orders.forEach(o => {
+    this.deliveries.forEach(o => {
       if (status === 'Delivered') {
         if (o.status === 'Delivered') {
           data.push(o);
@@ -75,15 +85,12 @@ export class OrderPage implements OnInit {
       }
     });
     this.filteredOrders = data;
+    console.log(this.filteredOrders);
   }
 
-  onClickOrderDetail(index: number) {
-    this.recipayData.setSelectedOrder(this.orders[index]);
-  }
-
-  onClickReceiveOrder(index: number) {
+  onClickCompleteDelivery(index: number) {
     let params = {
-      order_id: this.orders[index].id
+      order_id: this.deliveries[index].id
     };
 
     this.alertCtrl.create({
@@ -93,12 +100,13 @@ export class OrderPage implements OnInit {
         { text: 'Cancel', role: 'cancel' },
         {
           text: 'Confirm', handler: () => {
-            this.recipayApi.receiveOrder(params).subscribe(res => {
+            this.carrierApi.completeDeliver(params).subscribe(res => {
+              console.log(res);
               if (!res.error) {
-                this.orders = [];
-                this.initOrders();
+                this.deliveries = [];
+                this.initMyDelivery();
                 this.toastCtrl.create({
-                  message: 'Successfully received order.'
+                  message: 'Successfully confirmed deliver.'
                 }).then(overlay => {
                   overlay.present();
                 });
