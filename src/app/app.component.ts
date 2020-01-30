@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
 
   onClickLogout() {
     this.userService.setUser(null);
+    this.userService.setPassword(null);
     this.menuCtrl.toggle();
     this.router.navigate(['/login']);
   }

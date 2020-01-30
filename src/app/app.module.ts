@@ -17,8 +17,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 const firebase = {
-  // your firebase web config
-}
+  apiKey: 'AIzaSyBPVjsxZ_7zFEKrl4B4yh79-7TvkzpByac',
+  // authDomain: "project-id.firebaseapp.com",
+  databaseURL: 'https://recipaymobile.firebaseio.com/',
+  projectId: 'recipaymobile',
+  storageBucket: 'gs://recipaymobile.appspot.com',
+  // messagingSenderId: "sender-id",
+  appId: '1:509103223362:android:7ce2b6e346a06895e533db',
+};
 
 @NgModule({
   declarations: [AppComponent],

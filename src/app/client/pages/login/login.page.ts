@@ -58,6 +58,7 @@ export class LoginPage implements OnInit {
           } else {
             if (res.data.user_type === 'client') {
               this.userService.setUser(res.data);
+              this.userService.setPassword(this.password.trim());
               this.router.navigate(['/home']);
             }
             if (res.data.user_type === 'carrier') {

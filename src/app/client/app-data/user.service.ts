@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
 
+  password = new BehaviorSubject<string>(null);
+  getPassword = this.password.asObservable();
+
   userData = new BehaviorSubject<User>(null);
   getUser = this.userData.asObservable();
 
@@ -14,5 +17,9 @@ export class UserService {
 
   setUser(user: User) {
     this.userData.next(user);
+  }
+
+  setPassword(pass: string) {
+    this.password.next(pass);
   }
 }

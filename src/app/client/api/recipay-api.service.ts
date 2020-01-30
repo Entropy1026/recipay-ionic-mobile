@@ -63,4 +63,17 @@ export class RecipayApiService {
     return this.http.post(this.baseUrl + 'open/order/receiveOrder', params, { headers: this.headers });
   }
 
+  updatePersonalInfo(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/users/updatePersonalInfo', params, { headers: this.headers });
+  }
+
+  updateEmailInfo(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/users/updateEmailInfo', params, { headers: this.headers });
+  }
+
+  updatePasswordInfo(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/users/updatePasswordInfo', params, { headers: this.headers });
+  }
+
+
 }

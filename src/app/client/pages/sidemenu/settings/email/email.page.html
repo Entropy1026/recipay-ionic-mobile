@@ -1,0 +1,23 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating" >Current email</ion-label>
+          <ion-input [(ngModel)]="currentEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" >New email</ion-label>
+          <ion-input [(ngModel)]="newEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" >Confirm New email</ion-label>
+          <ion-input [(ngModel)]="confirmNewEmail"></ion-input>
+        </ion-item>
+        <ion-button class="mt5" expand="full" shape="round" (click)="updateEmail()">
+          Update Email
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

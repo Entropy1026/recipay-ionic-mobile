@@ -1,0 +1,87 @@
+<ion-content>
+  <ng-container *ngIf="user">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating" >Username</ion-label>
+            <ion-input [(ngModel)]="user.username"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating" >First name</ion-label>
+            <ion-input [(ngModel)]="user.firstname"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating" >Middle name</ion-label>
+            <ion-input [(ngModel)]="user.middlename"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating" >Last name</ion-label>
+            <ion-input [(ngModel)]="user.lastname"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating" >Mobile</ion-label>
+            <ion-input [(ngModel)]="user.mobile"></ion-input>
+          </ion-item>
+          <ion-button class="mt5" expand="full" shape="round" (click)="updateInformation()">
+            Update Information
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+
+  <ng-container *ngIf="!user">
+    <ion-list>
+      <div class="display-center">
+        <ion-item lines="none">
+          <ion-avatar style="height: 200px; width: 200px;">
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-avatar>
+        </ion-item>
+      </div>
+      <ion-item>
+        <ion-label>
+          <h3 class="display-center">
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </h3>
+          <h3 class="display-start mt5">
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <h3 class="display-start mt5">
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </h3>
+        </ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>
+          <h3>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </h3>
+          <p>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+          <p>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </p>
+          <h3 class="display-start mt5">
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+</ion-content>
