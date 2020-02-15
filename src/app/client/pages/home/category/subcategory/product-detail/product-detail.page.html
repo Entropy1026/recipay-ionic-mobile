@@ -23,28 +23,34 @@
 </ion-header>
 
 <ion-content>
-  
+
   <ng-container *ngIf="product">
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col class="ion-no-padding">
           <!-- <div style="position: relative; width: 100%; height: 150px;"> -->
-            <ion-img  [src]="product.image"></ion-img >
+          <ion-img [src]="product.image"></ion-img>
           <!-- </div> -->
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <div style="display:flex;justify-content: center;">
-            <h1 class="ion-text-center">{{ product.name }}</h1>
-            <div>
-              <div style="padding-top:15px;">
-                <ion-buttons slot="primary">
-                  <ion-button (click)="addToFavorite()">
-                    <ion-icon name="heart" [color]="product.favorite ? 'danger' : 'primary'" slot="icon-only"></ion-icon>
-                  </ion-button>
-                </ion-buttons>
-              </div>
+          <h1 class="ion-text-center">{{ product.name }}</h1>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div>
+            <div style="justify-content: center;display: flex;">
+              <ion-buttons slot="primary">
+                <ion-button (click)="addToFavorite()">
+                  <ion-icon name="heart" [color]="product.favorite ? 'danger' : 'primary'" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </div>
+            <div style="justify-content: center;display: flex;">
+              <span *ngIf="product.favorite">Remove from favorites</span>
+              <span *ngIf="!product.favorite">Add to favorites</span>
             </div>
           </div>
         </ion-col>
@@ -56,25 +62,25 @@
               Ingredients
             </ion-label>
           </ion-item-divider>
-          <ion-list  [ngClass]="ingredientShow ? 'show':'hide'" id="ingredients">
+          <ion-list [ngClass]="ingredientShow ? 'show':'hide'" id="ingredients">
             <ion-item *ngFor="let ingredient of product.ingredients">
               <ion-label>{{ ingredient.qty | number:'1.0-0' }} {{ ingredient.name }} {{ ingredient.unit }}</ion-label>
               <ion-checkbox slot="start" color="primary"></ion-checkbox>
             </ion-item>
           </ion-list>
-  
+
           <ion-item-divider>
             <ion-label (click)="collapseInstruct()">
               Instructions
             </ion-label>
           </ion-item-divider>
-            <ion-list [ngClass]="instructionShow ? 'show':'hide'" id="instructions">
-              <ion-item *ngFor="let instruction of textInstruction; let i = index;">
-                <span style="display: flex; flex-wrap: wrap;">
-                  {{ i+1 }}. {{ instruction }}.
-                </span>
-              </ion-item>
-            </ion-list>
+          <ion-list [ngClass]="instructionShow ? 'show':'hide'" id="instructions">
+            <ion-item *ngFor="let instruction of textInstruction; let i = index;">
+              <span style="display: flex; flex-wrap: wrap;">
+                {{ i+1 }}. {{ instruction }}.
+              </span>
+            </ion-item>
+          </ion-list>
           <ion-item-divider>
             <ion-label>
               Video
@@ -82,7 +88,8 @@
           </ion-item-divider>
           <ion-list>
             <ion-item>
-              There is currently no video available.
+            <embed *ngIf="product.video" [src]="sanitizeImage(product.video)">
+             <span *ngIf="!product.video">no video available</span>
             </ion-item>
           </ion-list>
           <ion-item-divider>
@@ -91,11 +98,28 @@
             </ion-label>
           </ion-item-divider>
           <ion-list>
-            <ion-item *ngFor="let comment of product.comments; let i = index;">
-              <ion-avatar slot="start">
-                <ion-img [src]="comment.image"></ion-img>
-              </ion-avatar>
-              <ion-label>{{ comment.name }}</ion-label>
+            <ion-item *ngFor="let comment of product.comment; let i = index;">
+              <div>
+                <ion-avatar slot="start">
+                  <ion-img [src]="comment.picture"></ion-img>
+                </ion-avatar>
+                <ion-label>{{ comment.username }}</ion-label>
+              </div>
+              <div>
+                <div style="padding-left:10px;">
+                <span>{{ comment.comment}}</span>
+                </div>
+                <div style="padding-left:10px;">
+                  <small>{{ comment.date.date | date:'MMM d, y'}}</small>
+                  </div>
+                <div style="display: flex;justify-content: center;padding-left:10px;">
+                  <ion-icon name="star" [color]="comment.rating > 0 ? 'primary': ''" slot="icon-only"></ion-icon>
+                  <ion-icon name="star" [color]="comment.rating > 1 ? 'primary': ''" slot="icon-only"></ion-icon>
+                  <ion-icon name="star" [color]="comment.rating > 2 ? 'primary': ''" slot="icon-only"></ion-icon>
+                  <ion-icon name="star" [color]="comment.rating > 3 ? 'primary': ''" slot="icon-only"></ion-icon>
+                  <ion-icon name="star" [color]="comment.rating > 4 ? 'primary': ''" slot="icon-only"></ion-icon>
+                </div>
+              </div>
             </ion-item>
           </ion-list>
         </ion-col>

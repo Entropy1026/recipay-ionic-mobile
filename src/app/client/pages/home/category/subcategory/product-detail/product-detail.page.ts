@@ -9,6 +9,7 @@ import { UserService } from 'src/app/client/app-data/user.service';
 import { ModalController } from '@ionic/angular';
 import { OrderQuantityComponent } from 'src/app/client/pages/components/order-quantity/order-quantity.component';
 import { map } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-detail',
@@ -30,7 +31,8 @@ export class ProductDetailPage implements OnInit {
     private cartService: CartService,
     private router: Router,
     private userService: UserService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() {
@@ -60,7 +62,9 @@ export class ProductDetailPage implements OnInit {
   collapseIngredient() {
     this.ingredientShow = !this.ingredientShow;
   }
-
+  public sanitizeImage(url:any){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url+"&output=embed");
+  }
   addToCart(product) {
     this.modalController.create({
       component: OrderQuantityComponent,
