@@ -84,7 +84,13 @@
                       <small>{{ o.billinginfo.Address }}</small>
                     </span>
                   </div>
-                  <div class="display-end" *ngIf="o.status === 'Waiting User Confirmation' || o.status === 'Cancelled' ">
+                  <div style="display:flex; justify-content:flex-end;">
+                    <span class="ion-text-right">
+                      <small>Mobile No: </small>
+                      <small style="color:green"><a href="sms://'{{ o.billinginfo.Contact }}'" >{{ o.billinginfo.Contact }}</a></small>
+                    </span>
+                  </div>
+                  <div class="display-end" *ngIf="o.status === 'Departing' || o.status === 'Cancelled' ">
                     <ion-button (click)="onClickCompleteDelivery(i)">
                       Complete Delivery
                     </ion-button>

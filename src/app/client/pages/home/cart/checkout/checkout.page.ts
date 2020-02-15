@@ -32,6 +32,8 @@ export class CheckoutPage implements OnInit {
   amount: number;
   cart = [];
   userId;
+  sucessfulPayment = false;
+  contactNumber;
 
   constructor(
     private recipayApi: RecipayApiService,
@@ -52,6 +54,7 @@ export class CheckoutPage implements OnInit {
     this.userService.getUser.subscribe(
       res => {
         this.userId = res.id;
+        this.contactNumber = res.mobile;
       }
     );
     this.cartService.getCart.subscribe(cart => {
@@ -94,11 +97,13 @@ export class CheckoutPage implements OnInit {
             //     "intent": "sale"
             //   }
             // }
+            this.sucessfulPayment = true;
             let params = {
               user_id: this.userId,
-              billing_address: this.billingAddress,
+              billing_address: this.billingAddress.trim(),
               billing_city: this.billingCity,
               amount: this.totalPayment,
+              contact_info: this.contactNumber.trim(),
               method: 'Paypal',
               transaction: res.response.id,
               delivery_date_picked: this.date
@@ -107,6 +112,7 @@ export class CheckoutPage implements OnInit {
               if (!data.error) {
                 this.toastCtrl.create({
                   message: data.message,
+                  duration: 2000
                 });
                 this.router.navigate(['/order']);
               } else {
@@ -115,7 +121,7 @@ export class CheckoutPage implements OnInit {
                 });
               }
             });
-
+            this.router.navigate(['/order']);
           }, () => {
             // Error or render dialog closed without being successful
           });
@@ -127,6 +133,9 @@ export class CheckoutPage implements OnInit {
       });
     }
 
+    if (this.sucessfulPayment) {
+      this.router.navigate(['/order']);
+    }
   }
 
   validate() {
@@ -143,6 +152,14 @@ export class CheckoutPage implements OnInit {
     } else if (this.date === datetimeNow) {
       this.toastCtrl.create({
         message: 'Please enter billing address.',
+        duration: 2000
+      }).then(overlay => {
+        overlay.present();
+      });
+      valid = false;
+    } else if (!this.contactNumber) {
+      this.toastCtrl.create({
+        message: 'Please enter contact number.',
         duration: 2000
       }).then(overlay => {
         overlay.present();

@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyBPVjsxZ_7zFEKrl4B4yh79-7TvkzpByac',
+    authDomain: 'recipaymobile.firebaseapp.com',
+    databaseURL: 'https://recipaymobile.firebaseio.com',
+    projectId: 'recipaymobile',
+    storageBucket: 'recipaymobile.appspot.com',
+    messagingSenderId: '509103223362',
+    appId: '1:509103223362:web:e8d9623a00aa3f24e533db'
+  }
 };
 
 /*

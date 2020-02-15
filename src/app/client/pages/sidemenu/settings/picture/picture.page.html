@@ -1,11 +1,18 @@
 <ion-content>
   <div class="mt5">
     <div class="display-center">
-      <ion-avatar>
-        <img [src]="user.image" height="150px" width="100%" />
-      </ion-avatar>
+      <ng-container *ngIf="!image">
+        <ion-avatar>
+          <img [src]="user.image" height="120px" width="100%" (click)="onClickImage()" />
+        </ion-avatar>
+      </ng-container>
+      <ng-container *ngIf="sanitizeImage">
+        <ion-avatar>
+          <img [src]="sanitizeImage" height="120px" width="100%" (click)="onClickImage()" />
+        </ion-avatar>
+      </ng-container>
     </div>
-    <ion-button class="mt5" expand="full" shape="round" (click)="updatePicture()">
+    <ion-button class="mt5" expand="full" shape="round" (click)="updatePicture($event)">
       Update Picture
     </ion-button>
   </div>

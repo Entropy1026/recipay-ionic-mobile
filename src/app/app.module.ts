@@ -15,16 +15,12 @@ import { Firebase } from '@ionic-native/firebase';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-
-const firebase = {
-  apiKey: 'AIzaSyBPVjsxZ_7zFEKrl4B4yh79-7TvkzpByac',
-  // authDomain: "project-id.firebaseapp.com",
-  databaseURL: 'https://recipaymobile.firebaseio.com/',
-  projectId: 'recipaymobile',
-  storageBucket: 'gs://recipaymobile.appspot.com',
-  // messagingSenderId: "sender-id",
-  appId: '1:509103223362:android:7ce2b6e346a06895e533db',
-};
+import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
+import { Camera } from '@ionic-native/camera/ngx';
+import * as firebase from 'firebase';
+import { File } from '@ionic-native/file/ngx';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +30,7 @@ const firebase = {
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(firebase),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],
   providers: [
@@ -43,6 +39,10 @@ const firebase = {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     RecipayApiService,
     PayPal,
+    AngularFireStorage,
+    Camera,
+    File,
+    { provide: BUCKET, useValue: environment.firebase.storageBucket }
   ],
   bootstrap: [AppComponent]
 })

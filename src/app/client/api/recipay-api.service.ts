@@ -12,6 +12,7 @@ export class RecipayApiService {
   // baseUrl = 'https://staging-recipay-admin-api.herokuapp.com/public/';
   // baseUrl = 'http://localhost/staging-recipay-admin-api/public/';
   baseUrl = 'http://192.168.1.5/staging-recipay-admin-api/public/';
+  // baseUrl = 'http://192.168.43.74/staging-recipay-admin-api/public/';
 
   constructor(private http: HttpClient) { }
 
@@ -75,5 +76,8 @@ export class RecipayApiService {
     return this.http.post(this.baseUrl + 'open/users/updatePasswordInfo', params, { headers: this.headers });
   }
 
+  updateImageInfo(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/users/updateImageInfo', params, { headers: this.headers });
+  }
 
 }

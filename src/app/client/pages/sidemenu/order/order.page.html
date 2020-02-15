@@ -63,10 +63,10 @@
                     </span>
                   </div>
                   <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Delivered'">
-                     <ion-button>
+                     <ion-button (click)="rate(i)">
                             Rate
                      </ion-button>
-                     <ion-button>
+                     <ion-button (click)="comment(i)">
                             Comment
                       </ion-button>
                   </div>

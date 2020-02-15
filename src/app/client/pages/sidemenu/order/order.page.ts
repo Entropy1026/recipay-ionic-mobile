@@ -98,7 +98,8 @@ export class OrderPage implements OnInit {
                 this.orders = [];
                 this.initOrders();
                 this.toastCtrl.create({
-                  message: 'Successfully received order.'
+                  message: 'Successfully received order.',
+                  duration: 2000
                 }).then(overlay => {
                   overlay.present();
                 });
@@ -111,6 +112,14 @@ export class OrderPage implements OnInit {
       overlay.present();
     });
 
+  }
+
+  rate(index: number) {
+
+  }
+
+  comment(index: number) {
+    
   }
 
 }
