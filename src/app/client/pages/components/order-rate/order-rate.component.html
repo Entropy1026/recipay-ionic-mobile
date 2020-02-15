@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="primary">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>back
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<div style="display: flex;justify-content: center;">
+  <div>
+    <div style="display: flex;justify-content: center;">
+      <b style="color:green;padding-top:10px;">Rate products</b>
+    </div>
+    <div *ngFor="let items of data.items; index as i" style="padding-top:15px;">
+      <div style="display: flex;justify-content: center;">
+        <span>{{items.name}}</span>
+      </div>
+      <div style="display: flex;justify-content:center;padding-top:10px;">
+        <span>Rate</span>
+      </div>
+      <div style="display: flex;justify-content:center;">
+        <div>
+          <ion-buttons slot="primary">
+            <ion-button (click)="setRating(i,1)">
+              <ion-icon name="star" [color]="ratings[i] > 0 ? 'primary': ''" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button (click)="setRating(i,2)">
+              <ion-icon name="star" [color]="ratings[i] > 1 ? 'primary': '' " slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button (click)="setRating(i,3)">
+              <ion-icon name="star" [color]="ratings[i] > 2  ? 'primary': ''" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button (click)="setRating(i,4)">
+              <ion-icon name="star" [color]="ratings[i] > 3  ? 'primary': ''" slot="icon-only"></ion-icon>
+            </ion-button>
+            <ion-button (click)="setRating(i,5)">
+              <ion-icon name="star" [color]="ratings[i] > 4  ? 'primary': ''" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </div>
+      <div style="display: flex;justify-content:center;padding-top:10px;">
+        <span>Comment</span>
+      </div>
+      <div style="display: flex;justify-content:center;">
+        <ion-item>
+          <ion-textarea (ionChange)="setComment(i,$event.target.value)"clearOnEdit="true"></ion-textarea>
+        </ion-item>
+      </div>
+      <div style="display: flex;justify-content:center;padding-top:10px;">
+        <ion-button (click)="rate(i)">
+         Rate <ion-icon slot="end" name="send"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</div>
+</ion-content>
