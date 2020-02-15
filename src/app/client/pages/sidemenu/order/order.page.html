@@ -34,7 +34,7 @@
                       <small>{{ items.name }} </small>
                     </div>
                     <div>
-                      <small>QTY {{ items.qty }}</small> 
+                      <small style="padding-right:5px;">QTY {{ items.qty }}</small> 
                       <small>PRICE {{ items.price }} </small>
                     </div>
                   </div>
@@ -58,21 +58,30 @@
                   </div>
                   <div style="display:flex; justify-content:flex-end;">
                     <span class="ion-text-right">
+                      <small>Address: </small>
+                      <small style="padding-right:5px;">{{o.billinginfo.Address}}</small><small>{{o.billinginfo.City}}</small>
+                    </span>
+                  </div>
+                  <div style="display:flex; justify-content:flex-end;">
+                    <span class="ion-text-right">
                       <small>Delivery: </small>
                       <small>{{ o.delivery_datetime.date | date:'MMM d, y, h:mm'}}</small>
                     </span>
                   </div>
                   <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Delivered'">
-                     <ion-button (click)="rate(i)">
-                            Rate
-                     </ion-button>
-                     <ion-button (click)="comment(i)">
-                            Comment
-                      </ion-button>
+                     <ion-button (click)="comment(o)">
+                      <div>
+                        <ion-icon name="star"></ion-icon>
+                      </div> 
+                       <span class="padding-top:10px;padding-right:5px;">Rate</span>
+                       <div>
+                         <ion-icon name="star"></ion-icon>
+                       </div> 
+                       </ion-button>
                   </div>
                   <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Waiting User Confirmation'">
-                    <ion-button (click)="onClickReceiveOrder(i)">
-                           Recieve Order
+                    <ion-button (click)="onClickReceiveOrder(o.id)">
+                          Recieve Order
                     </ion-button>
                  </div>
                     <!-- <div button="true" [routerLink]="['/order/order-detail/tabs']" style="display:flex; justify-content:flex-end;padding-top:10px;">

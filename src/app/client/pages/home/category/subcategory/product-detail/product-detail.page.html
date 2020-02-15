@@ -35,7 +35,18 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <h1 class="ion-text-center">{{ product.name }}</h1>
+          <div style="display:flex;justify-content: center;">
+            <h1 class="ion-text-center">{{ product.name }}</h1>
+            <div>
+              <div style="padding-top:15px;">
+                <ion-buttons slot="primary">
+                  <ion-button (click)="addToFavorite()">
+                    <ion-icon name="heart" [color]="product.favorite ? 'danger' : 'primary'" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </div>
+            </div>
+          </div>
         </ion-col>
       </ion-row>
       <ion-row>

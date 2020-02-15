@@ -3,7 +3,8 @@ import { RecipayApiService } from 'src/app/client/api/recipay-api.service';
 import { RecipayDataService } from 'src/app/client/app-data/recipay-data.service';
 import { User } from 'src/app/client/models/user';
 import { UserService } from 'src/app/client/app-data/user.service';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ToastController, ModalController } from '@ionic/angular';
+import { OrderRateComponent } from '../../components/order-rate/order-rate.component';
 
 @Component({
   selector: 'app-order',
@@ -23,7 +24,8 @@ export class OrderPage implements OnInit {
     private recipayData: RecipayDataService,
     private userData: UserService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController ,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -83,7 +85,7 @@ export class OrderPage implements OnInit {
 
   onClickReceiveOrder(index: number) {
     let params = {
-      order_id: this.orders[index].id
+      order_id: index
     };
 
     this.alertCtrl.create({
@@ -118,8 +120,34 @@ export class OrderPage implements OnInit {
 
   }
 
-  comment(index: number) {
-    
+  comment(data: any) {
+    console.log(data);
+    this.modalController.create({
+      component: OrderRateComponent,
+      cssClass: 'modal-size-2' ,
+      componentProps: {data:data}
+    }).then(async overlay => {
+      overlay.present();
+
+      // if (overlay.onWillDismiss()) {
+      //   const data = await overlay.onWillDismiss();
+      //   if (data && data.data && data.data.quantity) {
+      //     this.userService.getUser.subscribe(
+      //       user => {
+      //         if (user && user.id) {
+      //           const params = {
+      //             product_id: product.id,
+      //             user_id: user.id,
+      //             quantity: data.data.quantity
+      //           };
+      //           this.cartService.addtoCart(params);
+      //         }
+      //       }
+      //     );
+      //   }
+      // }
+
+    });
   }
 
 }

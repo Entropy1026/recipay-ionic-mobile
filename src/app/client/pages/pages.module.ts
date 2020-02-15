@@ -5,9 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { LoadingMenuComponent } from './components/loading-menu/loading-menu.component';
 import { LoadingListComponent } from './components/loading-list/loading-list.component';
 import { OrderQuantityComponent } from './components/order-quantity/order-quantity.component';
+import { OrderRateComponent } from './components/order-rate/order-rate.component';
 
 @NgModule({
-  declarations: [LoadingListComponent, LoadingMenuComponent, OrderQuantityComponent],
+  declarations: [LoadingListComponent, LoadingMenuComponent, OrderQuantityComponent, OrderRateComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -16,8 +17,9 @@ import { OrderQuantityComponent } from './components/order-quantity/order-quanti
   exports: [
     LoadingMenuComponent,
     LoadingListComponent,
-    OrderQuantityComponent
+    OrderQuantityComponent,
+    OrderRateComponent
   ],
-  entryComponents: [ OrderQuantityComponent ]
+  entryComponents: [ OrderQuantityComponent , OrderRateComponent]
 })
 export class PagesModule { }
