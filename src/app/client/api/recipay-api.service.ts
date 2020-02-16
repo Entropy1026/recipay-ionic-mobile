@@ -88,4 +88,7 @@ export class RecipayApiService {
   findMyOrder(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'open/order/findMyOrder', params, { headers: this.headers });
   }
+  rateProduct(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/products/makeReview', params, { headers: this.headers });
+  }
 }
