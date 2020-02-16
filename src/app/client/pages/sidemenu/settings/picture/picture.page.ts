@@ -6,9 +6,6 @@ import { RecipayApiService } from 'src/app/client/api/recipay-api.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 
-import { File } from '@ionic-native/file/ngx';
-import { AngularFireStorage } from 'angularfire2/storage';
-import { finalize } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -32,8 +29,6 @@ export class PicturePage implements OnInit {
     private toastCtrl: ToastController,
     private camera: Camera,
     private loadingCtrl: LoadingController,
-    private file: File,
-    private storage: AngularFireStorage,
     private detectRef: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
   ) { }

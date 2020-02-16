@@ -3,6 +3,9 @@ import { LoadingController, MenuController, AlertController, ToastController } f
 import { RecipayApiService } from '../../api/recipay-api.service';
 import { UserService } from '../../app-data/user.service';
 import { Router } from '@angular/router';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +17,9 @@ export class LoginPage implements OnInit {
   username: string;
   password: string;
   loading;
+  isLoggedIn = false;
+  // users = { id: '', name: '', email: '', picture: { data: { url: '' } } };
+  user
 
   constructor(
     private recipayApi: RecipayApiService,
@@ -22,14 +28,49 @@ export class LoginPage implements OnInit {
     private alertCtrl: AlertController,
     public toastCtrl: ToastController,
     private userService: UserService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private fb: Facebook,
+    public afAuth: AngularFireAuth,
+  ) {
+    // fb.getLoginStatus()
+    //   .then(res => {
+    //     console.log(res.status);
+    //     if (res.status === 'connect') {
+    //       this.isLoggedIn = true;
+    //     } else {
+    //       this.isLoggedIn = false;
+    //     }
+    //   })
+    //   .catch(e => console.log(e));
+  }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
     this.menuCtrl.swipeGesture(false);
+  }
+
+  // Sign in with Facebook
+  FacebookAuth() {
+    return this.AuthLogin(new auth.FacebookAuthProvider());
+  }
+
+  // Auth logic to run auth providers
+  AuthLogin(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((result) => {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = result.credential as firebase.auth.OAuthCredential;
+        // The signed-in user info.
+        const token = credential.accessToken;
+        const user = result.user;
+        let firstName, lastName, email, phoneNumber = '';
+        console.log(result);
+        console.log('You have been successfully logged in!');
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
   onClickLogin() {
@@ -81,6 +122,36 @@ export class LoginPage implements OnInit {
       }, 1000);
     }
   }
+
+  // fbLogin() {
+  //   this.fb.login(['public_profile', 'user_friends', 'email'])
+  //     .then(res => {
+  //       if (res.status === 'connected') {
+  //         this.isLoggedIn = true;
+  //         this.getUserDetail(res.authResponse.userID);
+  //       } else {
+  //         this.isLoggedIn = false;
+  //       }
+  //     })
+  //     .catch(e => console.log('Error logging into Facebook', e));
+  // }
+
+  // getUserDetail(userid: any) {
+  //   this.fb.api('/' + userid + '/?fields=id,email,name,picture', ['public_profile'])
+  //     .then(res => {
+  //       console.log(res);
+  //       this.users = res;
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // }
+
+  // logout() {
+  //   this.fb.logout()
+  //     .then(res => this.isLoggedIn = false)
+  //     .catch(e => console.log('Error logout from Facebook', e));
+  // }
 
   validate() {
     let valid = true;

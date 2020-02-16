@@ -21,6 +21,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import * as firebase from 'firebase';
 import { File } from '@ionic-native/file/ngx';
 import { environment } from '../environments/environment';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,7 +44,9 @@ import { environment } from '../environments/environment';
     AngularFireStorage,
     Camera,
     File,
-    { provide: BUCKET, useValue: environment.firebase.storageBucket }
+    { provide: BUCKET, useValue: environment.firebase.storageBucket },
+    Facebook,
+    AngularFireAuth
   ],
   bootstrap: [AppComponent]
 })

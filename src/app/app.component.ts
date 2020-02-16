@@ -6,6 +6,9 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { UserService } from './client/app-data/user.service';
 import { User } from './client/models/user';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +46,11 @@ export class AppComponent implements OnInit {
   onClickLogout() {
     this.userService.setUser(null);
     this.userService.setPassword(null);
+    firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
     this.menuCtrl.toggle();
     this.router.navigate(['/login']);
   }

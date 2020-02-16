@@ -1,10 +1,10 @@
 <ion-content>
   <div class="login-container">
     <div style="display: flex;justify-content: center;padding-top:150px;">
-    <ion-img src="../../../../assets/img/recipaylogo.png"></ion-img>
-    <div class="login-title">
-      Recipay
-    </div>
+      <ion-img src="../../../../assets/img/recipaylogo.png"></ion-img>
+      <div class="login-title">
+        Recipay
+      </div>
     </div>
     <div class="login-form">
       <ion-item>
@@ -18,6 +18,39 @@
       <div class="login-btn">
         <ion-button shape="round" expand="full" (click)="onClickLogin()">
           Sign in
+        </ion-button>
+      </div>
+      <!-- <div class="login-btn facebook">
+        <ion-button shape="round" expand="full" (click)="fbLogin()">
+          Facebook
+        </ion-button>
+      </div> -->
+
+      <div class="ion-padding" *ngIf="isLoggedIn === true">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Hi, {{users.name}}</ion-card-subtitle>
+            <ion-card-title>{{users.email}}</ion-card-title>
+          </ion-card-header>
+          <img
+            src="{{users.picture.data.url}}"
+            width="100"
+            alt="{{users.name}}"
+          />
+          <ion-card-content>
+            <p>
+              <ion-button expand="full" color="secondary" (click)="logout()">
+                Logout
+                <ion-icon name="log-out"></ion-icon>
+              </ion-button>
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <div class="ion-padding" *ngIf="isLoggedIn === false">
+        <ion-button expand="full" shape="round" color="primary" (click)="FacebookAuth()">
+          Login with
+          <ion-icon name="logo-facebook"></ion-icon>
         </ion-button>
       </div>
     </div>
