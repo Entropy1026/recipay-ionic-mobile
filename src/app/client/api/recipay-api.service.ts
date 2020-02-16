@@ -79,5 +79,16 @@ export class RecipayApiService {
   updateImageInfo(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'open/users/updateImageInfo', params, { headers: this.headers });
   }
-
+  addToFavorites(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/products/addFavorite', params, { headers: this.headers });
+  }
+  getProductDetailsById(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/products/productFindByIdAnUser', params, { headers: this.headers });
+  }
+  findMyOrder(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'open/order/findMyOrder', params, { headers: this.headers });
+  }
+  rateProduct(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/products/makeReview', params, { headers: this.headers });
+  }
 }

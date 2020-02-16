@@ -6,9 +6,10 @@ import { LoadingMenuComponent } from './components/loading-menu/loading-menu.com
 import { LoadingListComponent } from './components/loading-list/loading-list.component';
 import { OrderQuantityComponent } from './components/order-quantity/order-quantity.component';
 import { OrderRateComponent } from './components/order-rate/order-rate.component';
+import { DisputeDialogComponent } from './components/dispute-dialog/dispute-dialog.component';
 
 @NgModule({
-  declarations: [LoadingListComponent, LoadingMenuComponent, OrderQuantityComponent, OrderRateComponent],
+  declarations: [LoadingListComponent, LoadingMenuComponent, OrderQuantityComponent, OrderRateComponent, DisputeDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,8 +19,9 @@ import { OrderRateComponent } from './components/order-rate/order-rate.component
     LoadingMenuComponent,
     LoadingListComponent,
     OrderQuantityComponent,
-    OrderRateComponent
+    OrderRateComponent,
+    DisputeDialogComponent
   ],
-  entryComponents: [ OrderQuantityComponent , OrderRateComponent]
+  entryComponents: [ OrderQuantityComponent , OrderRateComponent , DisputeDialogComponent]
 })
 export class PagesModule { }

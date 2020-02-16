@@ -38,7 +38,11 @@ const routes: Routes = [
   {
     path: 'carrier/settings',
     loadChildren: () => import('./carrier/pages/sidemenu/settings/settings.module').then( m => m.SettingsPageModule)
+  },  {
+    path: 'dispute',
+    loadChildren: () => import('./client/pages/sidemenu/dispute/dispute.module').then( m => m.DisputePageModule)
   }
+
 ];
 
 @NgModule({
