@@ -14,6 +14,7 @@
       <b style="color:green;padding-top:10px;">Rate products</b>
     </div>
     <div *ngFor="let items of data.items; index as i" style="padding-top:15px;">
+      <div *ngIf="rated[i]['status'] !== 'rated'">
       <div style="display: flex;justify-content: center;">
         <span>{{items.name}}</span>
       </div>
@@ -54,6 +55,7 @@
          Rate <ion-icon slot="end" name="send"></ion-icon>
         </ion-button>
       </div>
+    </div>
     </div>
   </div>
 </div>

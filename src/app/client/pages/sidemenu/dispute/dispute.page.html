@@ -3,26 +3,34 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Order</ion-title>
+    <ion-title>Dispute</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
-    <ion-row style="background-color:#e0e0e0;padding-bottom:5px;padding-top:-15px">
-      <ion-col [ngClass]="!isPending? 'selected':'unselected'" (click)="selectTab('pending')"style="display: flex;justify-content: center;background-color:#fefefe">Incompleted Orders</ion-col>
-      <ion-col [ngClass]="!isPending? 'unselected':'selected'" (click)="selectTab('complete')"style="display: flex;justify-content: center;padding-left:5px;background-color:#fefefe">Completed Orders</ion-col>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+                <ion-input type="number" placeholder="Provide transaction id" [(ngModel)]="input"></ion-input>
+                <ion-buttons>
+                  <ion-button (click)="searchOrder(input)">
+                    <ion-icon name="search" color="primary" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+        </ion-item>
+      </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <ion-list>
-          <ng-container *ngIf="!empty && orders.length === 0">
+          <!-- <ng-container *ngIf="!empty && orders.length === 0">
             <app-loading-list></app-loading-list>
-          </ng-container>
+          </ng-container> -->
 
-          <ng-container *ngIf="orders">
+          <ng-container *ngIf="order">
             <ng-container style="height:500px;overflow-y:auto;">
-              <ion-item *ngFor="let o of filteredOrders; let i = index;">
+              <ion-item *ngFor="let o of order; let i = index;">
                 <!-- <ion-avatar slot="start">
                   <ion-img [src]="c.image"> </ion-img>
                 </ion-avatar> -->
@@ -69,13 +77,10 @@
                     </span>
                   </div>
                   <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Delivered'">
-                     <ion-button (click)="comment(o.id)">
-                      <div>
-                        <ion-icon name="star"></ion-icon>
-                      </div> 
-                       <span class="padding-top:10px;padding-right:5px;">Rate</span>
+                     <ion-button (click)="dispute(o.id)"> 
+                       <span class="padding-top:10px;padding-right:5px;">Report</span>
                        <div>
-                         <ion-icon name="star"></ion-icon>
+                         <ion-icon name="warning"></ion-icon>
                        </div> 
                        </ion-button>
                   </div>
@@ -94,7 +99,7 @@
             </ng-container>
           </ng-container>
 
-          <ng-container *ngIf="empty">
+          <ng-container *ngIf="empty && submit">
             <div class="display-center mt-5">
               <ion-chip color="danger">
                 <ion-icon name="alert"></ion-icon>
