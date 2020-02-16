@@ -26,7 +26,7 @@ export class OrderRateComponent implements OnInit {
     console.log(this.data);
     this.data.items.forEach((item:any,i:number) => {
       if(item){
-        this.ratings.push({i:0});
+        this.ratings.push({i:null});
         this.comments.push({i:null});
         this.rated.push({status:'not-rated'});
 
@@ -45,7 +45,27 @@ export class OrderRateComponent implements OnInit {
   setComment(index:number , value:any){
    this.comments[index] = value; 
   }
+
   rate(index:number){
+    if(this.ratings[index]['i'] === null){
+      this.toastController.create({
+        message: 'Ratings is required',
+        duration: 2000
+        }).then(overlay => {
+        overlay.present();
+        });
+     return; 
+    }
+    else if(this.comments[index]['i'] === null){
+      this.toastController.create({
+        message: 'Comment is required',
+        duration: 2000
+        }).then(overlay => {
+        overlay.present();
+        });
+    return;
+    }
+    else{
     let params = {
       prod_id:this.data.items[index]['id'],
       user_id:this.user.id,
@@ -79,7 +99,7 @@ export class OrderRateComponent implements OnInit {
     ()=>{}
 
     );
-  
+  }
   }
   closeModal(){
     this.modalController.dismiss(); 
