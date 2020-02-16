@@ -26,7 +26,7 @@
 
   <ng-container *ngIf="product">
     <ion-grid class="ion-no-padding">
-      <ion-row>
+      <ion-row (click)="playVideo(product.video)">
         <ion-col class="ion-no-padding">
           <!-- <div style="position: relative; width: 100%; height: 150px;"> -->
           <ion-img [src]="product.image"></ion-img>
@@ -43,7 +43,7 @@
           <div>
             <div style="justify-content: center;display: flex;">
               <ion-buttons slot="primary">
-                <ion-button (click)="addToFavorite()">
+                <ion-button (click)="favorite()">
                   <ion-icon name="heart" [color]="product.favorite ? 'danger' : 'primary'" slot="icon-only"></ion-icon>
                 </ion-button>
               </ion-buttons>
@@ -79,17 +79,6 @@
               <span style="display: flex; flex-wrap: wrap;">
                 {{ i+1 }}. {{ instruction }}.
               </span>
-            </ion-item>
-          </ion-list>
-          <ion-item-divider>
-            <ion-label>
-              Video
-            </ion-label>
-          </ion-item-divider>
-          <ion-list>
-            <ion-item>
-            <embed *ngIf="product.video" [src]="sanitizeImage(product.video)">
-             <span *ngIf="!product.video">no video available</span>
             </ion-item>
           </ion-list>
           <ion-item-divider>

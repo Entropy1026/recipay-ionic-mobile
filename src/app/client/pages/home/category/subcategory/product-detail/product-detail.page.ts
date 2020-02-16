@@ -6,15 +6,17 @@ import { BehaviorSubject } from 'rxjs';
 import { CartService } from 'src/app/client/app-data/cart.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/client/app-data/user.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { OrderQuantityComponent } from 'src/app/client/pages/components/order-quantity/order-quantity.component';
 import { map } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
   styleUrls: ['./product-detail.page.scss'],
+  providers:[VideoPlayer]
 })
 export class ProductDetailPage implements OnInit {
 
@@ -24,6 +26,7 @@ export class ProductDetailPage implements OnInit {
   textInstruction = [];
   instructionShow: boolean = false;
   ingredientShow: boolean = false;
+  user:any;
 
   constructor(
     private recipayApi: RecipayApiService,
@@ -33,6 +36,8 @@ export class ProductDetailPage implements OnInit {
     private userService: UserService,
     private modalController: ModalController,
     private sanitizer: DomSanitizer,
+    private videoPlayer: VideoPlayer,
+    private toastController: ToastController
   ) { }
 
   ngOnInit() {
@@ -48,10 +53,15 @@ export class ProductDetailPage implements OnInit {
   initProductDetail() {
     this.recipayData.getSelectedProduct.subscribe(product => {
       this.product = product;
+      console.log(product);
       if (this.product) {
         const stringToSplit = this.product.text_instruction;
         this.textInstruction = stringToSplit.split('.');
       }
+    });
+    this.userService.userData.subscribe(user => {
+      this.user = user;
+      console.log(user);
     });
   }
 
@@ -92,7 +102,51 @@ export class ProductDetailPage implements OnInit {
 
     });
   }
+  favorite(){
+    let params = {
+    user_id:this.user.id ,
+    prod:this.product.id
+    };
+    this.recipayApi.addToFavorites(params).subscribe(
+    res=>{
+    console.log(res);
+    this.reInitDetails();
+    this.toastController.create({
+      message: res.message,
+      duration: 2000
+    }).then(overlay => {
+      overlay.present();
+    });
+    } ,
+    err=>{
 
+    },
+    ()=>{
+
+    }
+    );
+  }
+  playVideo(url:any){
+    this.videoPlayer.play(url).then(() => {
+      console.log('video completed');
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+  reInitDetails(){
+    let params = {
+      user_id:this.user.id ,
+      prod:this.product.id
+    }
+    this.recipayApi.getProductDetailsById(params).subscribe(
+    res=>{
+    this.recipayData.setSelectedProduct(res.data[0]);  
+    this.initProductDetail();
+    },
+    err=>{
+    },
+    ()=>{});
+  }
   openCart() {
     this.router.navigate(['/home/cart']);
   }
