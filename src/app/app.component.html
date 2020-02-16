@@ -63,7 +63,7 @@
         </ion-menu-toggle>
       </ion-list>
 
-      <ion-list *ngIf="user && user.user_type === 'client'">
+      <ion-list *ngIf="user && user.user_type === 'client' || user && user.user_type === 'fb-client'">
         <ion-menu-toggle auto-hide="false">
           <ion-item routerLink="/home" routerDirection="root">
             <ion-icon name="home" slot="start"></ion-icon>

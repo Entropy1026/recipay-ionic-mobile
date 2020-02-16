@@ -59,20 +59,69 @@ export class LoginPage implements OnInit {
   // Auth logic to run auth providers
   AuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
-      .then((result) => {
+      .then((result:any) => {
         // This gives you a Facebook Access Token. You can use it to access the Facebook API.
         const credential = result.credential as firebase.auth.OAuthCredential;
         // The signed-in user info.
         const token = credential.accessToken;
         const user = result.user;
         let firstName, lastName, email, phoneNumber = '';
-        console.log(result);
-        console.log('You have been successfully logged in!');
+        let params = {
+        username:result.additionalUserInfo.profile.id,
+        password:result.additionalUserInfo.profile.id,
+        firstname:result.additionalUserInfo.profile.first_name,
+        middlename:'',
+        lastname:result.additionalUserInfo.profile.last_name,
+        email:result.additionalUserInfo.profile.email,
+        mobile:null,
+        user_image:'https://www.fandompost.com/wp-content/uploads/2019/08/Itai-no-wa-Iya-nano-de-Bogyoryoku-Header.jpg'
+        };
+       this.loginViaFacebook(params);
       }).catch((error) => {
         console.log(error);
       });
   }
-
+  loginViaFacebook(params:any){
+    setTimeout(() => {
+      this.recipayApi.loginViaFacebook(params).subscribe(res => {
+        if (res.error) {
+          this.alertCtrl.create({
+            message: res.message,
+            buttons: ['Okay']
+          }).then(overlay => {
+            overlay.present();
+          });
+        } else {
+          if (res.data.user_type === 'client') {
+            this.userService.setUser(res.data);
+            this.userService.setPassword(this.password.trim());
+            this.router.navigate(['/home']);
+          }
+          if (res.data.user_type === 'carrier') {
+            this.userService.setUser(res.data);
+            this.router.navigate(['/carrier']);
+          }
+          if (res.data.user_type === 'fb-client') {
+            this.userService.setUser(res.data);
+            // this.userService.setPassword(this.password.trim());
+            this.router.navigate(['/home']);
+          }
+        }
+      },
+        (err) => {
+          this.toastCtrl.create({
+            message: 'Error:' + err,
+            duration: 2000
+          });
+          this.loading.dismiss();
+        },
+        () => {
+          this.loading.dismiss();
+        }
+      );
+    }, 1000);
+  // }
+  }
   onClickLogin() {
     if (this.validate()) {
       this.loadingCtrl.create({
