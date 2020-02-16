@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginPage implements OnInit {
   loading;
   isLoggedIn = false;
   // users = { id: '', name: '', email: '', picture: { data: { url: '' } } };
-  user
+  // user
 
   constructor(
     private recipayApi: RecipayApiService,
@@ -53,37 +54,86 @@ export class LoginPage implements OnInit {
 
   // Sign in with Facebook
   FacebookAuth() {
-    return this.AuthLogin(new auth.FacebookAuthProvider());
+   this.AuthLogin(new firebase.auth.FacebookAuthProvider());
   }
 
   // Auth logic to run auth providers
   AuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((result:any) => {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = result.credential as firebase.auth.OAuthCredential;
-        // The signed-in user info.
-        const token = credential.accessToken;
-        const user = result.user;
-        let firstName, lastName, email, phoneNumber = '';
+    return firebase.auth().signInWithPopup(provider).then((result:any) => {
+      // firebase.auth().getRedirectResult().then((result: any) => {
         let params = {
-        username:result.additionalUserInfo.profile.id,
-        password:result.additionalUserInfo.profile.id,
-        firstname:result.additionalUserInfo.profile.first_name,
-        middlename:'',
-        lastname:result.additionalUserInfo.profile.last_name,
-        email:result.additionalUserInfo.profile.email,
-        mobile:null,
-        user_image:'https://www.fandompost.com/wp-content/uploads/2019/08/Itai-no-wa-Iya-nano-de-Bogyoryoku-Header.jpg'
+          username: result.additionalUserInfo.profile.id,
+          password: result.additionalUserInfo.profile.id,
+          firstname: result.additionalUserInfo.profile.first_name,
+          middlename: '',
+          lastname: result.additionalUserInfo.profile.last_name,
+          email: result.additionalUserInfo.profile.email,
+          mobile: null,
+          user_image: 'https://www.fandompost.com/wp-content/uploads/2019/08/Itai-no-wa-Iya-nano-de-Bogyoryoku-Header.jpg'
         };
-       this.loginViaFacebook(params);
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
-  loginViaFacebook(params:any){
+        this.loginViaFacebook(params);
+    //   }).catch((error) => {
+    //     console.log(error);
+    // });
+  });
+}
+loginViaFacebook(params: any) {
+  setTimeout(() => {
+    this.recipayApi.loginViaFacebook(params).subscribe(res => {
+      if (res.error) {
+        this.alertCtrl.create({
+          message: res.message,
+          buttons: ['Okay']
+        }).then(overlay => {
+          overlay.present();
+        });
+      } else {
+        if (res.data.user_type === 'client') {
+          this.userService.setUser(res.data);
+          this.userService.setPassword(this.password.trim());
+          this.router.navigate(['/home']);
+        }
+        if (res.data.user_type === 'carrier') {
+          this.userService.setUser(res.data);
+          this.router.navigate(['/carrier']);
+        }
+        if (res.data.user_type === 'fb-client') {
+          this.userService.setUser(res.data);
+          // this.userService.setPassword(this.password.trim());
+          this.router.navigate(['/home']);
+        }
+      }
+    },
+      (err) => {
+        this.toastCtrl.create({
+          message: 'Error:' + err,
+          duration: 2000
+        });
+        this.loading.dismiss();
+      },
+      () => {
+        this.loading.dismiss();
+      }
+    );
+  }, 1000);
+  // }
+}
+onClickLogin() {
+  if (this.validate()) {
+    this.loadingCtrl.create({
+      message: 'Signing in...'
+    }).then(overlay => {
+      this.loading = overlay;
+      overlay.present();
+    });
+
+    const params = {
+      username: this.username.trim(),
+      password: this.password.trim()
+    };
+
     setTimeout(() => {
-      this.recipayApi.loginViaFacebook(params).subscribe(res => {
+      this.recipayApi.login(params).subscribe(res => {
         if (res.error) {
           this.alertCtrl.create({
             message: res.message,
@@ -101,11 +151,6 @@ export class LoginPage implements OnInit {
             this.userService.setUser(res.data);
             this.router.navigate(['/carrier']);
           }
-          if (res.data.user_type === 'fb-client') {
-            this.userService.setUser(res.data);
-            // this.userService.setPassword(this.password.trim());
-            this.router.navigate(['/home']);
-          }
         }
       },
         (err) => {
@@ -120,108 +165,59 @@ export class LoginPage implements OnInit {
         }
       );
     }, 1000);
-  // }
   }
-  onClickLogin() {
-    if (this.validate()) {
-      this.loadingCtrl.create({
-        message: 'Signing in...'
-      }).then(overlay => {
-        this.loading = overlay;
-        overlay.present();
-      });
+}
 
-      const params = {
-        username: this.username.trim(),
-        password: this.password.trim()
-      };
+// fbLogin() {
+//   this.fb.login(['public_profile', 'user_friends', 'email'])
+//     .then(res => {
+//       if (res.status === 'connected') {
+//         this.isLoggedIn = true;
+//         this.getUserDetail(res.authResponse.userID);
+//       } else {
+//         this.isLoggedIn = false;
+//       }
+//     })
+//     .catch(e => console.log('Error logging into Facebook', e));
+// }
 
-      setTimeout(() => {
-        this.recipayApi.login(params).subscribe(res => {
-          if (res.error) {
-            this.alertCtrl.create({
-              message: res.message,
-              buttons: ['Okay']
-            }).then(overlay => {
-              overlay.present();
-            });
-          } else {
-            if (res.data.user_type === 'client') {
-              this.userService.setUser(res.data);
-              this.userService.setPassword(this.password.trim());
-              this.router.navigate(['/home']);
-            }
-            if (res.data.user_type === 'carrier') {
-              this.userService.setUser(res.data);
-              this.router.navigate(['/carrier']);
-            }
-          }
-        },
-          (err) => {
-            this.toastCtrl.create({
-              message: 'Error:' + err,
-              duration: 2000
-            });
-            this.loading.dismiss();
-          },
-          () => {
-            this.loading.dismiss();
-          }
-        );
-      }, 1000);
-    }
+// getUserDetail(userid: any) {
+//   this.fb.api('/' + userid + '/?fields=id,email,name,picture', ['public_profile'])
+//     .then(res => {
+//       console.log(res);
+//       this.users = res;
+//     })
+//     .catch(e => {
+//       console.log(e);
+//     });
+// }
+
+// logout() {
+//   this.fb.logout()
+//     .then(res => this.isLoggedIn = false)
+//     .catch(e => console.log('Error logout from Facebook', e));
+// }
+
+validate() {
+  let valid = true;
+  if (!this.username) {
+    this.toastCtrl.create({
+      message: 'Please enter username.',
+      duration: 2000
+    }).then(overlay => {
+      overlay.present();
+    });
+    valid = false;
+  } else if (!this.password) {
+    this.toastCtrl.create({
+      message: 'Please enter password.',
+      duration: 2000
+    }).then(overlay => {
+      overlay.present();
+    });
+    valid = false;
   }
-
-  // fbLogin() {
-  //   this.fb.login(['public_profile', 'user_friends', 'email'])
-  //     .then(res => {
-  //       if (res.status === 'connected') {
-  //         this.isLoggedIn = true;
-  //         this.getUserDetail(res.authResponse.userID);
-  //       } else {
-  //         this.isLoggedIn = false;
-  //       }
-  //     })
-  //     .catch(e => console.log('Error logging into Facebook', e));
-  // }
-
-  // getUserDetail(userid: any) {
-  //   this.fb.api('/' + userid + '/?fields=id,email,name,picture', ['public_profile'])
-  //     .then(res => {
-  //       console.log(res);
-  //       this.users = res;
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // }
-
-  // logout() {
-  //   this.fb.logout()
-  //     .then(res => this.isLoggedIn = false)
-  //     .catch(e => console.log('Error logout from Facebook', e));
-  // }
-
-  validate() {
-    let valid = true;
-    if (!this.username) {
-      this.toastCtrl.create({
-        message: 'Please enter username.',
-        duration: 2000
-      }).then(overlay => {
-        overlay.present();
-      });
-      valid = false;
-    } else if (!this.password) {
-      this.toastCtrl.create({
-        message: 'Please enter password.',
-        duration: 2000
-      }).then(overlay => {
-        overlay.present();
-      });
-      valid = false;
-    }
-    return valid;
-  }
+  return valid;
+}
 
 }

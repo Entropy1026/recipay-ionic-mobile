@@ -11,12 +11,13 @@ import { OrderQuantityComponent } from 'src/app/client/pages/components/order-qu
 import { map } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
   styleUrls: ['./product-detail.page.scss'],
-  providers:[VideoPlayer]
+  providers: [VideoPlayer, StreamingMedia]
 })
 export class ProductDetailPage implements OnInit {
 
@@ -26,7 +27,7 @@ export class ProductDetailPage implements OnInit {
   textInstruction = [];
   instructionShow: boolean = false;
   ingredientShow: boolean = false;
-  user:any;
+  user: any;
 
   constructor(
     private recipayApi: RecipayApiService,
@@ -37,7 +38,8 @@ export class ProductDetailPage implements OnInit {
     private modalController: ModalController,
     private sanitizer: DomSanitizer,
     private videoPlayer: VideoPlayer,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private streamingMedia: StreamingMedia
   ) { }
 
   ngOnInit() {
@@ -72,8 +74,8 @@ export class ProductDetailPage implements OnInit {
   collapseIngredient() {
     this.ingredientShow = !this.ingredientShow;
   }
-  public sanitizeImage(url:any){
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url+"&output=embed");
+  public sanitizeImage(url: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url + "&output=embed");
   }
   addToCart(product) {
     this.modalController.create({
@@ -102,50 +104,59 @@ export class ProductDetailPage implements OnInit {
 
     });
   }
-  favorite(){
+  favorite() {
     let params = {
-    user_id:this.user.id ,
-    prod:this.product.id
+      user_id: this.user.id,
+      prod: this.product.id
     };
     this.recipayApi.addToFavorites(params).subscribe(
-    res=>{
-    console.log(res);
-    this.reInitDetails();
-    this.toastController.create({
-      message: res.message,
-      duration: 2000
-    }).then(overlay => {
-      overlay.present();
-    });
-    } ,
-    err=>{
+      res => {
+        console.log(res);
+        this.reInitDetails();
+        this.toastController.create({
+          message: res.message,
+          duration: 2000
+        }).then(overlay => {
+          overlay.present();
+        });
+      },
+      err => {
 
-    },
-    ()=>{
+      },
+      () => {
 
-    }
+      }
     );
   }
-  playVideo(url:any){
-    this.videoPlayer.play(url).then(() => {
-      console.log('video completed');
-    }).catch(err => {
-      console.log(err);
-    });
+  playVideo(url: any) {
+    // this.videoPlayer.play(url).then(() => {
+    //   console.log('video completed');
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+    // let options: StreamingVideoOptions = {
+    //   successCallback: () => { console.log('Video played') },
+    //   errorCallback: (e) => { console.log('Error streaming') },
+    //   orientation: 'landscape',
+    //   shouldAutoClose: true,
+    //   controls: false
+    // };
+
+    // this.streamingMedia.playVideo(url, options);
   }
-  reInitDetails(){
+  reInitDetails() {
     let params = {
-      user_id:this.user.id ,
-      prod:this.product.id
+      user_id: this.user.id,
+      prod: this.product.id
     }
     this.recipayApi.getProductDetailsById(params).subscribe(
-    res=>{
-    this.recipayData.setSelectedProduct(res.data[0]);  
-    this.initProductDetail();
-    },
-    err=>{
-    },
-    ()=>{});
+      res => {
+        this.recipayData.setSelectedProduct(res.data[0]);
+        this.initProductDetail();
+      },
+      err => {
+      },
+      () => { });
   }
   openCart() {
     this.router.navigate(['/home/cart']);

@@ -29,7 +29,7 @@ export class CheckoutPage implements OnInit {
   billingAddress: string;
   billingCity = this.cities[0];
   totalPayment: number;
-  amount: number;
+  amount: number = 0;
   cart = [];
   userId;
   sucessfulPayment = false;
@@ -59,8 +59,9 @@ export class CheckoutPage implements OnInit {
     );
     this.cartService.getCart.subscribe(cart => {
       this.cart = cart;
-      this.cart.map(item => {
-        this.amount = item.price;
+      console.log(cart);
+      this.cart.forEach(item => {
+        this.amount = this.amount +  item.price;
       });
     });
   }

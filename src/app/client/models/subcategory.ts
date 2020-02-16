@@ -14,5 +14,5 @@ export interface Subcategory {
     favorite: boolean;
     pax: number;
     rate: string;
-    comments: Comment;
+    comment: Comment;
 }

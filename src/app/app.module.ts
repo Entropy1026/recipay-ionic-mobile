@@ -46,7 +46,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
     File,
     { provide: BUCKET, useValue: environment.firebase.storageBucket },
     Facebook,
-    AngularFireAuth
+    AngularFireAuth,
   ],
   bootstrap: [AppComponent]
 })
