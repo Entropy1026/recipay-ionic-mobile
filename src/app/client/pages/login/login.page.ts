@@ -68,6 +68,12 @@ export class LoginPage implements OnInit {
     });
   }
   loginViaFacebook(params: any) {
+    this.loadingCtrl.create({
+      message: 'Signing in...'
+    }).then(overlay => {
+      this.loading = overlay;
+      overlay.present();
+    });
     setTimeout(() => {
       this.recipayApi.loginViaFacebook(params).subscribe(res => {
         if (res.error) {

@@ -21,12 +21,12 @@
         <ion-label>Account</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button tab="email">
+      <ion-tab-button tab="email" disabled="{{ user.user_type === 'fb-client' ? true : false }}">
         <ion-icon name="mail"></ion-icon>
         <ion-label>Email</ion-label>
       </ion-tab-button>
   
-      <ion-tab-button tab="password">
+      <ion-tab-button tab="password" disabled="{{ user.user_type === 'fb-client' ? true : false }}">
         <ion-icon name="key"></ion-icon>
         <ion-label>Password</ion-label>
       </ion-tab-button>
