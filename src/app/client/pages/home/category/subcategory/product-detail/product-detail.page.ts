@@ -12,12 +12,13 @@ import { map } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.page.html',
   styleUrls: ['./product-detail.page.scss'],
-  providers: [VideoPlayer, StreamingMedia]
+  providers: [VideoPlayer, StreamingMedia, YoutubeVideoPlayer]
 })
 export class ProductDetailPage implements OnInit {
 
@@ -39,7 +40,8 @@ export class ProductDetailPage implements OnInit {
     private sanitizer: DomSanitizer,
     private videoPlayer: VideoPlayer,
     private toastController: ToastController,
-    private streamingMedia: StreamingMedia
+    private streamingMedia: StreamingMedia,
+    private youtube: YoutubeVideoPlayer
   ) { }
 
   ngOnInit() {
@@ -134,15 +136,16 @@ export class ProductDetailPage implements OnInit {
     // }).catch(err => {
     //   console.log(err);
     // });
-    // let options: StreamingVideoOptions = {
-    //   successCallback: () => { console.log('Video played') },
-    //   errorCallback: (e) => { console.log('Error streaming') },
-    //   orientation: 'landscape',
-    //   shouldAutoClose: true,
-    //   controls: false
-    // };
+    let options: StreamingVideoOptions = {
+      successCallback: () => { console.log('Video played') },
+      errorCallback: (e) => { console.log('Error streaming') },
+      orientation: 'landscape',
+      shouldAutoClose: true,
+      controls: false
+    };
 
     // this.streamingMedia.playVideo(url, options);
+    this.youtube.openVideo(url);
   }
   reInitDetails() {
     let params = {
