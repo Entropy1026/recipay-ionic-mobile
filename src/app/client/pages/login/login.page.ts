@@ -33,16 +33,6 @@ export class LoginPage implements OnInit {
     private fb: Facebook,
     public afAuth: AngularFireAuth,
   ) {
-    // fb.getLoginStatus()
-    //   .then(res => {
-    //     console.log(res.status);
-    //     if (res.status === 'connect') {
-    //       this.isLoggedIn = true;
-    //     } else {
-    //       this.isLoggedIn = false;
-    //     }
-    //   })
-    //   .catch(e => console.log(e));
   }
 
   ngOnInit() {
@@ -54,86 +44,32 @@ export class LoginPage implements OnInit {
 
   // Sign in with Facebook
   FacebookAuth() {
-   this.AuthLogin(new firebase.auth.FacebookAuthProvider());
+    this.AuthLogin(new firebase.auth.FacebookAuthProvider());
   }
 
   // Auth logic to run auth providers
   AuthLogin(provider) {
-    return firebase.auth().signInWithPopup(provider).then((result:any) => {
+    return firebase.auth().signInWithPopup(provider).then((result: any) => {
       // firebase.auth().getRedirectResult().then((result: any) => {
-        let params = {
-          username: result.additionalUserInfo.profile.id,
-          password: result.additionalUserInfo.profile.id,
-          firstname: result.additionalUserInfo.profile.first_name,
-          middlename: '',
-          lastname: result.additionalUserInfo.profile.last_name,
-          email: result.additionalUserInfo.profile.email,
-          mobile: null,
-          user_image: 'https://www.fandompost.com/wp-content/uploads/2019/08/Itai-no-wa-Iya-nano-de-Bogyoryoku-Header.jpg'
-        };
-        this.loginViaFacebook(params);
-    //   }).catch((error) => {
-    //     console.log(error);
-    // });
-  });
-}
-loginViaFacebook(params: any) {
-  setTimeout(() => {
-    this.recipayApi.loginViaFacebook(params).subscribe(res => {
-      if (res.error) {
-        this.alertCtrl.create({
-          message: res.message,
-          buttons: ['Okay']
-        }).then(overlay => {
-          overlay.present();
-        });
-      } else {
-        if (res.data.user_type === 'client') {
-          this.userService.setUser(res.data);
-          this.userService.setPassword(this.password.trim());
-          this.router.navigate(['/home']);
-        }
-        if (res.data.user_type === 'carrier') {
-          this.userService.setUser(res.data);
-          this.router.navigate(['/carrier']);
-        }
-        if (res.data.user_type === 'fb-client') {
-          this.userService.setUser(res.data);
-          // this.userService.setPassword(this.password.trim());
-          this.router.navigate(['/home']);
-        }
-      }
-    },
-      (err) => {
-        this.toastCtrl.create({
-          message: 'Error:' + err,
-          duration: 2000
-        });
-        this.loading.dismiss();
-      },
-      () => {
-        this.loading.dismiss();
-      }
-    );
-  }, 1000);
-  // }
-}
-onClickLogin() {
-  if (this.validate()) {
-    this.loadingCtrl.create({
-      message: 'Signing in...'
-    }).then(overlay => {
-      this.loading = overlay;
-      overlay.present();
+      let params = {
+        username: result.additionalUserInfo.profile.id,
+        password: result.additionalUserInfo.profile.id,
+        firstname: result.additionalUserInfo.profile.first_name,
+        middlename: '',
+        lastname: result.additionalUserInfo.profile.last_name,
+        email: result.additionalUserInfo.profile.email,
+        mobile: null,
+        user_image: 'https://www.fandompost.com/wp-content/uploads/2019/08/Itai-no-wa-Iya-nano-de-Bogyoryoku-Header.jpg'
+      };
+      this.loginViaFacebook(params);
+      //   }).catch((error) => {
+      //     console.log(error);
+      // });
     });
-
-    const params = {
-      username: this.username.trim(),
-      password: this.password.trim()
-    };
-
+  }
+  loginViaFacebook(params: any) {
     setTimeout(() => {
-      this.recipayApi.login(params).subscribe(res => {
+      this.recipayApi.loginViaFacebook(params).subscribe(res => {
         if (res.error) {
           this.alertCtrl.create({
             message: res.message,
@@ -151,6 +87,11 @@ onClickLogin() {
             this.userService.setUser(res.data);
             this.router.navigate(['/carrier']);
           }
+          if (res.data.user_type === 'fb-client') {
+            this.userService.setUser(res.data);
+            // this.userService.setPassword(this.password.trim());
+            this.router.navigate(['/home']);
+          }
         }
       },
         (err) => {
@@ -165,59 +106,115 @@ onClickLogin() {
         }
       );
     }, 1000);
+    // }
   }
-}
+  onClickLogin() {
+    if (this.validate()) {
+      this.loadingCtrl.create({
+        message: 'Signing in...'
+      }).then(overlay => {
+        this.loading = overlay;
+        overlay.present();
+      });
 
-// fbLogin() {
-//   this.fb.login(['public_profile', 'user_friends', 'email'])
-//     .then(res => {
-//       if (res.status === 'connected') {
-//         this.isLoggedIn = true;
-//         this.getUserDetail(res.authResponse.userID);
-//       } else {
-//         this.isLoggedIn = false;
-//       }
-//     })
-//     .catch(e => console.log('Error logging into Facebook', e));
-// }
+      const params = {
+        username: this.username.trim(),
+        password: this.password.trim()
+      };
 
-// getUserDetail(userid: any) {
-//   this.fb.api('/' + userid + '/?fields=id,email,name,picture', ['public_profile'])
-//     .then(res => {
-//       console.log(res);
-//       this.users = res;
-//     })
-//     .catch(e => {
-//       console.log(e);
-//     });
-// }
-
-// logout() {
-//   this.fb.logout()
-//     .then(res => this.isLoggedIn = false)
-//     .catch(e => console.log('Error logout from Facebook', e));
-// }
-
-validate() {
-  let valid = true;
-  if (!this.username) {
-    this.toastCtrl.create({
-      message: 'Please enter username.',
-      duration: 2000
-    }).then(overlay => {
-      overlay.present();
-    });
-    valid = false;
-  } else if (!this.password) {
-    this.toastCtrl.create({
-      message: 'Please enter password.',
-      duration: 2000
-    }).then(overlay => {
-      overlay.present();
-    });
-    valid = false;
+      setTimeout(() => {
+        this.recipayApi.login(params).subscribe(res => {
+          if (res.error) {
+            this.alertCtrl.create({
+              message: res.message,
+              buttons: ['Okay']
+            }).then(overlay => {
+              overlay.present();
+            });
+          } else {
+            if (res.data.user_type === 'client') {
+              this.userService.setUser(res.data);
+              this.userService.setPassword(this.password.trim());
+              this.router.navigate(['/home']);
+            }
+            if (res.data.user_type === 'carrier') {
+              this.userService.setUser(res.data);
+              this.router.navigate(['/carrier']);
+            }
+          }
+        },
+          (err) => {
+            this.toastCtrl.create({
+              message: 'Error:' + err,
+              duration: 2000
+            });
+            this.loading.dismiss();
+          },
+          () => {
+            this.loading.dismiss();
+          }
+        );
+      }, 1000);
+    }
   }
-  return valid;
-}
+
+  fbLogin() {
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+    .then(res => {
+      if (res.status === 'connected') {
+        // this.isLoggedIn = true;
+        this.getUserDetail(res.authResponse.userID);
+      } else {
+        this.isLoggedIn = false;
+      }
+    })
+    .catch(e => console.log('Error logging into Facebook', e));
+  }
+
+  getUserDetail(userid: any) {
+    this.fb.api('/' + userid + '/?fields=id,email,first_name,last_name,picture', ['public_profile'])
+      .then(res => {
+        console.log(res);
+        // this.users = res;
+        // { id: '', name: '', email: '', picture: { data: { url: '' } } };
+        let params = {
+          username: res.id,
+          password: res.id,
+          firstname: res.first_name,
+          middlename: '',
+          lastname: res.last_name,
+          email: res.email,
+          mobile: null,
+          // user_image: 'https://www.fandompost.com/wp-content/uploads/2019/08/Itai-no-wa-Iya-nano-de-Bogyoryoku-Header.jpg'
+          user_image: res.picture.data.url
+        };
+        this.loginViaFacebook(params);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+  validate() {
+    let valid = true;
+    if (!this.username) {
+      this.toastCtrl.create({
+        message: 'Please enter username.',
+        duration: 2000
+      }).then(overlay => {
+        overlay.present();
+      });
+      valid = false;
+    } else if (!this.password) {
+      this.toastCtrl.create({
+        message: 'Please enter password.',
+        duration: 2000
+      }).then(overlay => {
+        overlay.present();
+      });
+      valid = false;
+    }
+    return valid;
+  }
 
 }
