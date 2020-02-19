@@ -12,6 +12,10 @@ export const environment = {
     storageBucket: 'recipaymobile.appspot.com',
     messagingSenderId: '509103223362',
     appId: '1:509103223362:web:e8d9623a00aa3f24e533db'
+  },
+  pusher: {
+    key: '3a8fcc2e92f13b706864',
+    cluster: 'ap1',
   }
 };
 

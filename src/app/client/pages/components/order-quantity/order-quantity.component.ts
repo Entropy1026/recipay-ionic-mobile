@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 export class OrderQuantityComponent implements OnInit {
   public quantity: number = 1;
   public maxQuantity: number = 10;
+  public data;
   constructor(private modalController: ModalController) { }
 
   ngOnInit() { }
@@ -26,7 +27,7 @@ export class OrderQuantityComponent implements OnInit {
   }
 
   add() {
-    if (this.quantity < this.maxQuantity) {
+    if (this.quantity < this.data) {
       this.quantity = this.quantity + 1;
     }
   }

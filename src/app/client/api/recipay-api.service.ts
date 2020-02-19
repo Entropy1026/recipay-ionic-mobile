@@ -2,19 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+declare const Pusher: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipayApiService {
 
+  channel: any;
+
   headers = new HttpHeaders({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
   // baseUrl = 'https://staging-recipay-admin-api.herokuapp.com/public/';
   //  baseUrl = 'http://localhost/staging-recipay-admin-api/public/';
-  baseUrl = 'http://192.168.1.5/staging-recipay-admin-api/public/';
-  // baseUrl = 'http://192.168.43.74/staging-recipay-admin-api/public/';
+  // baseUrl = 'http://192.168.1.5/staging-recipay-admin-api/public/';
+  baseUrl = 'http://192.168.0.32/staging-recipay-admin-api/public/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const pusher = new Pusher('3a8fcc2e92f13b706864', {
+      cluster: 'ap1',
+    });
+    this.channel = pusher.subscribe('order');
+  }
+
+  public init() {
+    return this.channel;
+  }
 
   login(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'open/users/login', params, { headers: this.headers });
@@ -93,5 +105,11 @@ export class RecipayApiService {
   }
   rateProduct(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'admin/products/makeReview', params, { headers: this.headers });
+  }
+  reportDispute(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/dispute/createDispute', params, { headers: this.headers });
+  }
+  getPersonalMessage(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/dispute/getPersonalMessage', params, { headers: this.headers });
   }
 }

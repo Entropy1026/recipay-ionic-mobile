@@ -82,7 +82,8 @@ export class ProductDetailPage implements OnInit {
   addToCart(product) {
     this.modalController.create({
       component: OrderQuantityComponent,
-      cssClass: 'modal-size'
+      cssClass: 'modal-size',
+      componentProps: { data: product.available }
     }).then(async overlay => {
       overlay.present();
 

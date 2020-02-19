@@ -6,6 +6,7 @@ import { CartService } from 'src/app/client/app-data/cart.service';
 import { UserService } from 'src/app/client/app-data/user.service';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 
 @Component({
   selector: 'app-checkout',
@@ -42,7 +43,8 @@ export class CheckoutPage implements OnInit {
     private userService: UserService,
     private toastCtrl: ToastController,
     private payPal: PayPal,
-    private router: Router
+    private router: Router,
+    private push: Push
   ) { }
 
   ngOnInit() {

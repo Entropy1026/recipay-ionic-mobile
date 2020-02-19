@@ -23,6 +23,7 @@ import { File } from '@ionic-native/file/ngx';
 import { environment } from '../environments/environment';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Push } from '@ionic-native/push/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,6 +48,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
     { provide: BUCKET, useValue: environment.firebase.storageBucket },
     Facebook,
     AngularFireAuth,
+    Push
   ],
   bootstrap: [AppComponent]
 })

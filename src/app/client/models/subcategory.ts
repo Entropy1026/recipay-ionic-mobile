@@ -8,6 +8,7 @@ export interface Subcategory {
     ingredients: Ingredient;
     text_instruction: string;
     video: string;
+    available: number;
     price: number;
     sold: number;
     type: string;

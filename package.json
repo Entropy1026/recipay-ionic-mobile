@@ -55,6 +55,7 @@
     "phonegap-plugin-multidex": "^1.0.0",
     "phonegap-plugin-push": "^2.3.0",
     "pusher": "^3.0.0",
+    "pusher-js": "^5.1.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
@@ -96,10 +97,7 @@
   "cordova": {
     "plugins": {
       "com.paypal.cordova.mobilesdk": {},
-      "phonegap-plugin-push": {
-        "ANDROID_SUPPORT_V13_VERSION": "27.+",
-        "FCM_VERSION": "17.0.+"
-      },
+      "phonegap-plugin-push": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-device": {},

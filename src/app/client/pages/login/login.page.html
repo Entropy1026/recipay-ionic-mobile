@@ -16,13 +16,14 @@
         <ion-input type="password" [(ngModel)]="password"></ion-input>
       </ion-item>
       <div class="login-btn">
-        <ion-button shape="round" expand="full" (click)="onClickLogin()">
-          Sign in
+        <ion-button shape="round"  color="success" expand="full" (click)="onClickLogin()">
+          Log-in
         </ion-button>
       </div>
       <div class="login-btn facebook">
-        <ion-button shape="round" expand="full" (click)="fbLogin()">
-          Facebook
+        <ion-button shape="round" class="color-blue" expand="full" (click)="fbLogin()">
+         Log-in Using Facebook
+         <!-- <ion-icon name="logo-facebook" icon="end"></ion-icon> -->
         </ion-button>
       </div>
     </div>

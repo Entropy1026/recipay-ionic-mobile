@@ -8,5 +8,33 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  
+  <h6 style="color:green;padding-top:10px;padding-left:5px;">Please provide additional</h6>
+  <div>
+    <span style="color:green;padding-top:10px;">Attachment</span>
+    <ng-container>
+      <ion-row>
+        <ion-col align-self-start>
+          <div style="border-style: solid green;"> 
+            <img *ngIf="sanitizeImage" [src]="sanitizeImage" height="200px" width="100%">
+          </div>
+        
+        </ion-col>
+        <ion-col align-self-end size="size-sm">
+          <ion-button class="mt5" expand="full" shape="round">
+            <span  *ngIf="!sanitizeImage" (click)="onClickImage()">Select</span> 
+            <span  *ngIf="sanitizeImage" (click)="onClickImage()"> Change</span> 
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-container> 
+  </div>
+  <!-- <div style="display: flex;justify-content: flex-start;"> -->
+    <ion-item style="width: 100%;">
+      <ion-label position="floating">Reason</ion-label>
+      <ion-input type="text" [(ngModel)]="reason"></ion-input>
+    </ion-item>
+  <!-- </div> -->
+  <ion-button (click)="OnReport()" class="mt5" expand="full" shape="round" [disabled]="reason.length === 0 || null && !sanitizeImage">
+    <span>Report</span>  
+  </ion-button>
 </ion-content>

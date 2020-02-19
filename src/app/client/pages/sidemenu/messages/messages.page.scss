@@ -1,0 +1,50 @@
+div.parent {
+    position: relative;
+    height: 100%;
+    // border: 2px solid #42a5f5 ;
+  }
+  
+  div.absolute {
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    // border: 1px solid #42a5f5 ;
+  }
+  .left {
+   display: flex;
+   justify-content: flex-start;
+  }
+  .right {
+    padding-left:30%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .bubble-admin {
+    background:#4fc3f7 ;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top:-20px;
+    border-radius: 15px 15px;
+//    opacity: 0.4;
+  }
+  .bubble-client {
+    background: #69f0ae ;
+    margin-right: 10px;
+    padding-top:-20px;
+    border-radius: 15px 15px;
+    // opacity:  0.4;
+   }
+   .add-padding {
+   padding-bottom:20px;
+   }
+   .padding-admin {
+    padding-left:15px;;
+    padding-left:15px;
+//    opacity: 0.4;
+  }
+  .padding-client {
+    // background: #69f0ae ;
+    // opacity:  0.4;
+    padding-left:15px;
+    padding-right:15px;
+   }

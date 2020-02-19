@@ -64,7 +64,7 @@
           </ion-item-divider>
           <ion-list [ngClass]="ingredientShow ? 'show':'hide'" id="ingredients">
             <ion-item *ngFor="let ingredient of product.ingredients">
-              <ion-label>{{ ingredient.qty | number:'1.0-0' }} {{ ingredient.name }} {{ ingredient.unit }}</ion-label>
+              <ion-label style="word-wrap: break-word;white-space:normal"><span *ngIf="ingredient.qty !== 0">{{ ingredient.qty | number:'1.0-0' }}</span> {{ ingredient.name }} {{ ingredient.unit }}</ion-label>
               <ion-checkbox slot="start" color="primary"></ion-checkbox>
             </ion-item>
           </ion-list>
@@ -92,7 +92,7 @@
                 <ion-avatar slot="start">
                   <ion-img [src]="comment.picture"></ion-img>
                 </ion-avatar>
-                <ion-label>{{ comment.username }}</ion-label>
+                <ion-label style="padding-left:7px;"><small style="color:green;"><b>{{ comment.username | uppercase}}</b></small></ion-label>
               </div>
               <div>
                 <div style="padding-left:10px;">

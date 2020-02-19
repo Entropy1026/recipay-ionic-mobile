@@ -31,7 +31,8 @@
         <ion-avatar slot="start">
           <ion-img [src]="subcategory.image"></ion-img>
         </ion-avatar>
-        <ion-label>{{ subcategory.name }}</ion-label>
+        <ion-label>{{ subcategory.name }}</ion-label><br>
+        <small>Price: {{subcategory.price}}</small> <small style="padding-left:10px;">Available: {{subcategory.available}}</small>
       </ion-item>
     </ng-container>
 
