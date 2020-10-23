@@ -44,6 +44,11 @@ export class HomePage implements OnInit {
     this.initAds();
     this.initMenu();
     this.initCart();
+
+    const channel = this.recipayApi.init();
+    channel.bind('my-event', ( res ) => {
+      console.log(res);
+    });
   }
 
   initHome() {

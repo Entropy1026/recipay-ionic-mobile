@@ -5,6 +5,9 @@ import { User } from 'src/app/client/models/user';
 import { UserService } from 'src/app/client/app-data/user.service';
 import { AlertController, ToastController, ModalController } from '@ionic/angular';
 import { OrderRateComponent } from '../../components/order-rate/order-rate.component';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
+
 
 @Component({
   selector: 'app-order',
@@ -24,7 +27,8 @@ export class OrderPage implements OnInit {
     private recipayData: RecipayDataService,
     private userData: UserService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController ,
+    private toastCtrl: ToastController,
+    private socialSharing: SocialSharing,
     private modalController: ModalController
   ) { }
 
@@ -60,7 +64,35 @@ export class OrderPage implements OnInit {
       this.filterOrders('Delivered');
     }
   }
+  shareOnFacebook(items: any) {
+    // this.socialSharing.().then(() => {
 
+    // }).catch(() => {
+
+    // });
+    let food = '';
+    let i = 0;
+    for (i = 0; i < items.length; i++) {
+      if (items.length === 1) {
+        food = items[0].name;
+      } else if (items.length > 1 && i > items.length - 1) {
+        food = food.concat(`, ${items[i].name}`);
+      } else if (items.length > 1 && i === items.length - 1) {
+        food = food.concat(`and ${items[i].name}`);
+      }
+
+    }
+    // items.forEach(element => {
+    //   food = food + element.id;
+    // });
+    this.socialSharing.shareViaFacebook(`I Ordered ${food} foods and its the best`,
+     'https://image.freepik.com/free-vector/cute-bento-illustration_136610-24.jpg',
+      null).then(() => {
+        // Success!
+      }).catch(() => {
+        // Error!
+      });
+  }
   filterOrders(status: any) {
     let data;
     data = [];
@@ -84,6 +116,7 @@ export class OrderPage implements OnInit {
   }
 
   onClickReceiveOrder(index: number) {
+    console.log(index);
     let params = {
       order_id: index
     };
@@ -124,8 +157,8 @@ export class OrderPage implements OnInit {
     console.log(data);
     this.modalController.create({
       component: OrderRateComponent,
-      cssClass: 'modal-size-2' ,
-      componentProps: {data:data}
+      cssClass: 'modal-size-2',
+      componentProps: { data: data }
     }).then(async overlay => {
       overlay.present();
 

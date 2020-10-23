@@ -13,15 +13,16 @@ export class RecipayApiService {
 
   headers = new HttpHeaders({ 'Accept': 'application/json', 'Content-Type': 'application/json' });
   // baseUrl = 'https://staging-recipay-admin-api.herokuapp.com/public/';
-  //  baseUrl = 'http://localhost/staging-recipay-admin-api/public/';
-  // baseUrl = 'http://192.168.1.5/staging-recipay-admin-api/public/';
-  baseUrl = 'http://192.168.0.32/staging-recipay-admin-api/public/';
+   baseUrl = 'http://localhost/staging-recipay-admin-api/public/';
+  // baseUrl = 'http://192.168.43.74/staging-recipay-admin-api/public/';
+  // baseUrl = 'http://192.168.0.32/staging-recipay-admin-api/public/';
 
   constructor(private http: HttpClient) {
-    const pusher = new Pusher('3a8fcc2e92f13b706864', {
+    const pusher = new Pusher('54c8120b2564780fce9c', {
       cluster: 'ap1',
+      forceTLS: true
     });
-    this.channel = pusher.subscribe('order');
+    this.channel = pusher.subscribe('recipay');
   }
 
   public init() {

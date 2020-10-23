@@ -104,7 +104,7 @@ export class CheckoutPage implements OnInit {
             let params = {
               user_id: this.userId,
               billing_address: this.billingAddress.trim(),
-              billing_city: this.billingCity,
+              billing_city: this.billingCity.display,
               amount: this.totalPayment,
               contact_info: this.contactNumber.trim(),
               method: 'Paypal',

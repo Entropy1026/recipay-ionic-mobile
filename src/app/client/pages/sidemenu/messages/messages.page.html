@@ -27,7 +27,7 @@
                     </div>
                     <div>
                       <small>
-                        <p *ngIf="message.length>0">
+                        <p *ngIf="message && message.length>0">
                           <span
                             *ngIf="message[message.length-1].from === 'admin'"
                             >Admin:

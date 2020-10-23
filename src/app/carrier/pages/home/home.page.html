@@ -85,13 +85,13 @@
                     </span>
                   </div>
                   <div style="display:flex; justify-content:flex-end;">
-                    <span class="ion-text-right">
+                    <span class="ion-text-right" (click)="sendMessage(o.billinginfo.Contact)">
                       <small>Mobile No: </small>
                       <small style="color:green"><a href="sms://'{{ o.billinginfo.Contact }}'" >{{ o.billinginfo.Contact }}</a></small>
                     </span>
                   </div>
                   <div class="display-end" *ngIf="o.status === 'On Delivery'">
-                    <ion-button (click)="onClickCompleteDelivery(i)">
+                    <ion-button (click)="onClickCompleteDelivery(o.id)">
                       Complete Delivery
                     </ion-button>
                   </div>
