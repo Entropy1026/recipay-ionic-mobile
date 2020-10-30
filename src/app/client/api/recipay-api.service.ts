@@ -19,10 +19,11 @@ export class RecipayApiService {
   baseUrl =  'http://localhost/RECIPAY-2020/staging-recipay-admin-api/public/';
 
   constructor(private http: HttpClient) {
-    const pusher = new Pusher('3a8fcc2e92f13b706864', {
+    const pusher = new Pusher('54c8120b2564780fce9c', {
       cluster: 'ap1',
+      forceTLS: true
     });
-    this.channel = pusher.subscribe('order');
+    this.channel = pusher.subscribe('recipay');
   }
 
   public init() {

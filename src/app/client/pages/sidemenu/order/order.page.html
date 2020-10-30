@@ -68,6 +68,7 @@
                       <small>{{ o.delivery_datetime.date | date:'MMM d, y, h:mm'}}</small>
                     </span>
                   </div>
+                  
                   <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Delivered'">
                      <ion-button (click)="comment(o)">
                       <div>
@@ -79,6 +80,14 @@
                        </div> 
                        </ion-button>
                   </div>
+                  <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Delivered'">
+                    <ion-button (click)="shareOnFacebook(o)">
+                      <span class="padding-top:10px;padding-right:5px;">Share</span>
+                      <div>
+                        <ion-icon name="share"></ion-icon>
+                      </div> 
+                      </ion-button>
+                 </div>
                   <div style="display:flex; justify-content:flex-end;" *ngIf="o.status === 'Waiting User Confirmation'">
                     <ion-button (click)="onClickReceiveOrder(o.id)">
                           Recieve Order

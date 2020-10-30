@@ -1,31 +1,49 @@
-<ion-content>
-  <div class="login-container">
-    <div style="display: flex;justify-content: center;padding-top:150px;">
-      <ion-img src="../../../../assets/img/recipaylogo.png"></ion-img>
-      <div class="login-title">
-        Recipay
-      </div>
-    </div>
-    <div class="login-form">
-      <ion-item>
-        <ion-label position="floating">Username</ion-label>
-        <ion-input [(ngModel)]="username"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" [(ngModel)]="password"></ion-input>
-      </ion-item>
-      <div class="login-btn">
-        <ion-button shape="round"  color="success" expand="full" (click)="onClickLogin()">
-          Log-in
-        </ion-button>
-      </div>
-      <div class="login-btn facebook">
-        <ion-button shape="round" class="color-blue" expand="full" (click)="fbLogin()">
-         Log-in Using Facebook
-         <!-- <ion-icon name="logo-facebook" icon="end"></ion-icon> -->
-        </ion-button>
-      </div>
-    </div>
+<div class="row " style="width:100%;height:100%">
+  <!-- <div class="wrapper"> -->
+  <div class="wrapper " style="width:100%;">  
+    <div class="sliding-background"></div>
   </div>
-</ion-content>
+  <div style="position: absolute;left:100px; top:250px"><img  width="120" heigth="120"
+      src="http://localhost/test/logo/dman.png" alt="">
+  </div>
+  <div class="body-logo">
+    <div class="waviy" style="position: absolute;top:0">
+      <span style="--i:1;color:#b4ff71">R</span>
+      <span style="--i:2;color:#b4ff71">E</span>
+      <span style="--i:3;color:#b4ff71">C</span>
+      <span style="--i:4;color:#b4ff71">I</span>
+      <span style="--i:5;color:#b4ff71">P</span>
+      <span style="--i:6;color:#b4ff71">A</span>
+      <span style="--i:7;color:#b4ff71">Y</span>
+    </div>
+    <!-- <label style="color:green;size:20px;font-family:Impact, Charcoal" for="">Recipay</label> -->
+  </div>
+  <div style="position:absolute;top:0;width:300px;height:250px; opacity: 0.9;margin-top:200px;margin-left:60px;border-radius: 50px;">
+    <ion-content>
+      <div class="login-container">
+        <div class="login-form">
+          <ion-item>
+            <ion-label position="floating">Username</ion-label>
+            <ion-input [(ngModel)]="username"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input type="password" [(ngModel)]="password"></ion-input>
+          </ion-item>
+        </div>
+        <div class="d-flex justify-content-start">
+          <div class="login-btn col-6 mt-2" >
+            <ion-button shape="round" class="color-blue" (click)="fbLogin()">
+              <ion-icon slot="icon-only" name="logo-facebook"></ion-icon>
+            </ion-button>
+          </div>
+          <div class="login-btn col-6 mt-2 ml-1">
+            <ion-button shape="round" color="success" (click)="onClickLogin()">
+              Log-in
+            </ion-button>
+          </div>  
+        </div>
+      </div>
+    </ion-content>
+  </div>
+  </div>

@@ -24,6 +24,10 @@ import { environment } from '../environments/environment';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Push } from '@ionic-native/push/ngx';
+import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { SMS } from '@ionic-native/sms';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -48,7 +52,9 @@ import { Push } from '@ionic-native/push/ngx';
     { provide: BUCKET, useValue: environment.firebase.storageBucket },
     Facebook,
     AngularFireAuth,
-    Push
+    Push,
+    PhonegapLocalNotification,
+    SocialSharing,
   ],
   bootstrap: [AppComponent]
 })
