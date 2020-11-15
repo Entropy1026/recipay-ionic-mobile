@@ -21,6 +21,7 @@ export class CartPage implements OnInit {
   constructor(
     private recipayApi: RecipayApiService,
     private recipayData: RecipayDataService,
+    private cdr:ChangeDetectorRef,
     private cartService: CartService,
     private userService: UserService,
     private alertCtrl: AlertController,
@@ -33,8 +34,12 @@ export class CartPage implements OnInit {
   getCartItems() {
     this.cartService.getLastScreen.subscribe(screen => this.lastScreen = screen);
     this.userService.getUser.subscribe(
-      res => {
+      (res:any) => {
+        if(res.length  === 0){
+          this.empty = true;
+        }
         this.cartService.getCartItems(res.id);
+        this.cdr.detectChanges();
       }
     );
     this.cartService.getCart.subscribe(cart => {

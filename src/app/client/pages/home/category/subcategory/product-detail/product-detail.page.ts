@@ -57,7 +57,6 @@ export class ProductDetailPage implements OnInit {
   initProductDetail() {
     this.recipayData.getSelectedProduct.subscribe(product => {
       this.product = product;
-      console.log(product);
       if (this.product) {
         const stringToSplit = this.product.text_instruction;
         this.textInstruction = stringToSplit.split('.');
@@ -65,7 +64,6 @@ export class ProductDetailPage implements OnInit {
     });
     this.userService.userData.subscribe(user => {
       this.user = user;
-      console.log(user);
     });
   }
 
@@ -114,7 +112,6 @@ export class ProductDetailPage implements OnInit {
     };
     this.recipayApi.addToFavorites(params).subscribe(
       res => {
-        console.log(res);
         this.reInitDetails();
         this.toastController.create({
           message: res.message,
@@ -150,12 +147,12 @@ export class ProductDetailPage implements OnInit {
   }
   reInitDetails() {
     let params = {
-      user_id: this.user.id,
+      user: this.user.id,
       prod: this.product.id
     }
     this.recipayApi.getProductDetailsById(params).subscribe(
       res => {
-        this.recipayData.setSelectedProduct(res.data[0]);
+        this.recipayData.setSelectedProduct(res[0]);
         this.initProductDetail();
       },
       err => {
@@ -163,7 +160,7 @@ export class ProductDetailPage implements OnInit {
       () => { });
   }
   openCart() {
-    this.router.navigate(['/home/cart']);
+    this.router.navigate(['/cart']);
   }
 
 }

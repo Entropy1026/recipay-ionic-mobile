@@ -19,7 +19,10 @@ export class CategoryPage implements OnInit {
   cart = [];
   menu: Menu;
   categories: Category[] = [];
+  menuList = [];
   empty = false;
+  filter = "all";
+  cuisines = [];
 
   constructor(
     private recipayApi: RecipayApiService,
@@ -31,6 +34,7 @@ export class CategoryPage implements OnInit {
   ngOnInit() {
     this.initToolbarTitle();
     this.initCategoryList();
+    this.initCuisineTypes();
     this.initCart();
   }
 
@@ -42,13 +46,18 @@ export class CategoryPage implements OnInit {
     const params = {
       type: this.menu ? this.menu.name : null
     };
-    this.recipayApi.getCategory(params).pipe(retry(2)).subscribe((res: any) => {
-      if (!res.error) {
-        this.categories = res.data;
+    this.recipayApi.getMenuNew().pipe(retry(2)).subscribe((res: any) => {
+        this.categories = res;
+        this.menuList = res;
         if (!this.categories) {
           this.empty = true;
         }
-      }
+    });
+  }
+
+  initCuisineTypes() {
+    this.recipayApi.getCuisines().pipe(retry(2)).subscribe((res: any) => {
+       this.cuisines = res;
     });
   }
 
@@ -56,14 +65,36 @@ export class CategoryPage implements OnInit {
     this.cartService.getCart.subscribe(cart => this.cart = cart);
     this.cartItemCount = this.cartService.getCartItemCount();
   }
-
+  segmentChanged(data:any){
+    this.filter = data;
+    let temp = [...this.menuList];
+    if(data === 'all'){
+      this.categories = temp;
+    }
+    else{
+      this.categories = temp.filter(t=>t.cuisine.name.toLowerCase( ) === data.toLowerCase( ) );
+    }
+  }
+  filterMenu(data:any){
+    let temp = [...this.menuList];
+    if(this.filter !== "all"){
+       temp = temp.filter(t=>t.cuisine.name.toLowerCase() === this.filter.toLowerCase());
+    }
+    if(data === ""){
+      this.categories = temp;
+    }
+    else{
+      let first = temp.filter(t=>t.name.toLowerCase().includes(data.toLowerCase()));
+      this.categories = first;
+    }
+  }
   onClickCategory(index: number) {
     this.recipayData.setSelectedCategory(this.categories[index]);
-    this.router.navigate(['/home/category/subcategory']);
+    this.router.navigate(['/category/subcategory']);
   }
 
   openCart() {
-    this.router.navigate(['/home/cart']);
+    this.router.navigate(['/cart']);
   }
 
 }

@@ -11,3 +11,11 @@ transition: all .3s ease-out;
 }
 
 
+.img {
+    // border: 1px solid #ddd; /* Gray border */
+    // border-radius: 4px;  /* Rounded border */
+    padding: 5px; /* Some padding */
+    object-fit: cover;
+    // width: 100%; /* Set a small width */
+    height: 250px;
+  }

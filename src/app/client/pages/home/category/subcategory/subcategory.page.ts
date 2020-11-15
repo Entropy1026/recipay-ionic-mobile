@@ -50,25 +50,24 @@ export class SubcategoryPage implements OnInit {
       id = res.id;
     });
     const params = {
-      category: this.category ? this.category.id : null,
-      user_id: id
+      menu: this.category ? {id:this.category.id }: {id:null},
+      user: id
     };
-    this.recipayApi.getSubcategory(params).subscribe((res: any) => {
-      if (!res.error) {
-        this.subcategories = res.data;
+    this.recipayApi.getProduct(params).subscribe((res: any) => {
+        this.subcategories = res;
         if (!this.subcategories) {
           this.empty = true;
         }
-      }
     });
   }
 
   onClickProduct(index: number) {
     this.recipayData.setSelectedProduct(this.subcategories[index]);
+    // this.router.navigate(['/category/subcategory/product-detail']);
   }
 
   openCart() {
-    this.router.navigate(['/home/cart']);
+    this.router.navigate(['/cart']);
   }
 
 }

@@ -26,14 +26,18 @@
 <ion-content>
   <ion-list>
     <ng-container *ngIf="subcategories">
-      <ion-item button="true" [routerLink]="['/home/category/subcategory', subcategory.id]" (click)="onClickProduct(i)"
-        *ngFor="let subcategory of subcategories; let i = index;">
-        <ion-avatar slot="start">
-          <ion-img [src]="subcategory.image"></ion-img>
-        </ion-avatar>
-        <ion-label>{{ subcategory.name }}</ion-label><br>
-        <small>Price: {{subcategory.price}}</small> <small style="padding-left:10px;">Available: {{subcategory.available}}</small>
-      </ion-item>
+      <ion-card *ngFor="let subcategory of subcategories; let i = index;" [routerLink]="['/category/subcategory', subcategory.id]"  (click)="onClickProduct(i)">
+        <ion-img class="img" [src]="subcategory.image"></ion-img>
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-label><span style="font-weight: bold;">{{ subcategory.category?.name | uppercase }}</span>&nbsp; ({{subcategory.pax}} PAX)</ion-label>
+          <ion-label class="alignme">₱ {{subcategory.price | number:'0.2'}}</ion-label>
+          <ion-button fill="outline" slot="end">Details</ion-button>
+        </ion-item>
+        <!-- <ion-card-content>
+          {{ category.description }}
+        </ion-card-content> -->
+      </ion-card>  
     </ng-container>
 
     <ng-container *ngIf="empty">

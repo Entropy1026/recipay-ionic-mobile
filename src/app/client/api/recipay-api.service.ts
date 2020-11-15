@@ -52,11 +52,19 @@ export class RecipayApiService {
   getCategory(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'admin/product/category/listByType', params, { headers: this.headers });
   }
+  getMenuNew(): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/product/category/menulist', { headers: this.headers });
+  }
 
   getSubcategory(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'admin/products/findbyCategory', params, { headers: this.headers });
   }
-
+  getProduct(params: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'admin/products/productlist', params, { headers: this.headers });
+  }
+  getCuisines(): Observable<any> {
+    return this.http.get(this.baseUrl + 'admin/cuisine/cuisineTypes', { headers: this.headers });
+  }
   addtoCart(params: any): Observable<any> {
     return this.http.post(this.baseUrl + 'open/order/addCartItem', params, { headers: this.headers });
   }

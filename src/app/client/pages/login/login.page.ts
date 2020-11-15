@@ -87,7 +87,7 @@ export class LoginPage implements OnInit {
           if (res.data.user_type === 'client') {
             this.userService.setUser(res.data);
             this.userService.setPassword(this.password.trim());
-            this.router.navigate(['/home']);
+            this.router.navigate(['/category']);
           }
           if (res.data.user_type === 'carrier') {
             this.userService.setUser(res.data);
@@ -96,7 +96,7 @@ export class LoginPage implements OnInit {
           if (res.data.user_type === 'fb-client') {
             this.userService.setUser(res.data);
             // this.userService.setPassword(this.password.trim());
-            this.router.navigate(['/home']);
+            this.router.navigate(['/category']);
           }
         }
       },

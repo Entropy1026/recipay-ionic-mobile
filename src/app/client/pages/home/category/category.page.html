@@ -1,4 +1,21 @@
+
 <ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button (click)="openCart()">
+        <div class="cart-length">{{ cartItemCount | async }}</div>
+        <ion-icon name="cart" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<!-- <ion-header>
   <ion-toolbar color="primary">
     <ng-container *ngIf="menu">
       <ion-buttons slot="start">
@@ -10,7 +27,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/home"></ion-back-button>
       </ion-buttons>
-      <ion-title>Cuisine</ion-title>
+      <ion-title>Home</ion-title>
     </ng-container>
 
     <ion-buttons slot="primary">
@@ -21,22 +38,40 @@
     </ion-buttons>
 
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
   <ion-list>
     <ng-container *ngIf="categories">
-      <ion-item button="true" *ngFor="let category of categories; let i = index;" (click)="onClickCategory(i)" >
-        <ion-avatar slot="start">
-          <ion-img [src]="category.image" >
-          </ion-img>
-        </ion-avatar>
-        <ion-label>
-          <h2> {{ category.name }} </h2>
-            <h3 style="word-wrap: break-word;white-space:normal" > {{ category.description }} </h3>
-          <h4> Available variant: {{ category.count }} </h4>
-        </ion-label>
-      </ion-item>
+     
+        <!-- <ion-searchbar  (ionChange)="filterMenu()"></ion-searchbar> -->
+        <ion-card class="stk">
+          <div >
+            <ion-searchbar (ionChange)="filterMenu($event.detail.value)"  color="light"></ion-searchbar>
+          </div>
+          <ion-segment (ionChange)="segmentChanged($event.detail.value)">
+            <ion-segment-button value="all">
+              <ion-label>All</ion-label>
+            </ion-segment-button>
+            <ion-segment-button *ngFor="let c of cuisines" [value]="c.name">
+              <ion-label>{{c.name}}</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+      </ion-card>
+     
+      <ion-card>
+        <ion-card *ngFor="let category of categories; let i = index;" (click)="onClickCategory(i)">
+        <ion-img class="img" [src]="category.img"></ion-img>
+        <ion-item>
+          <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+          <ion-label>{{ category.name }}</ion-label>
+          <ion-button fill="outline" slot="end">View</ion-button>
+        </ion-item>
+        <ion-card-content>
+          {{ category.description }}
+        </ion-card-content>
+      </ion-card>  
+      </ion-card>
     </ng-container>
 
     <ng-container *ngIf="empty">
@@ -48,7 +83,7 @@
       </div>
     </ng-container>
 
-    <ng-container *ngIf="!empty && categories.length === 0">
+    <ng-container *ngIf="!empty && menuList.length === 0">
       <app-loading-list></app-loading-list>
     </ng-container>
   </ion-list>

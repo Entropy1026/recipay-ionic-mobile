@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./client/pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./client/pages/home/category/category.module').then( m => m.CategoryPageModule)
   },
   {
     path: 'order',
@@ -38,11 +38,19 @@ const routes: Routes = [
   {
     path: 'carrier/settings',
     loadChildren: () => import('./carrier/pages/sidemenu/settings/settings.module').then( m => m.SettingsPageModule)
-  },  {
+  },
+  {
     path: 'dispute',
     loadChildren: () => import('./client/pages/sidemenu/dispute/dispute.module').then( m => m.DisputePageModule)
+  },
+  {
+    path: 'category',
+    loadChildren: () => import('./client/pages/home/category/category.module').then( m => m.CategoryPageModule)
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./client/pages/home/cart/cart.module').then( m => m.CartPageModule)
   }
-
 ];
 
 @NgModule({

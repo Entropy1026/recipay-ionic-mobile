@@ -17,7 +17,7 @@
             <app-loading-list></app-loading-list>
           </ng-container>
 
-          <ng-container *ngIf="empty">
+          <ng-container *ngIf="empty && cart.length === 0">
             <div class="display-center mt-5">
               <ion-chip color="danger">
                 <ion-icon name="alert"></ion-icon>
@@ -29,14 +29,11 @@
           <ng-container *ngIf="cart">
             <ng-container style="height:500px;overflow-y:auto;">
               <ion-item *ngFor="let c of cart; let i = index;">
-                <ion-avatar slot="start">
-                  <ion-img [src]="c.image"> </ion-img>
-                </ion-avatar>
-                <ion-label>
-                  <h2>{{ c.name }}</h2>
-                  <br />
+                <ion-img class="img" [src]="c.image"> </ion-img>
+                <ion-label style="padding-left:5px" >
+                  <h2 style="font-weight: bold;">{{ c.name }}</h2>
                   <small>Quantity: {{ c.qty }} </small>
-                  <small> Price: {{c.price}} </small>
+                  <small>Price: ₱ {{c.price | number:'0.2'}} </small>
                   <!-- <h3 style="word-wrap: break-word;"> {{ c.description }} </h3> -->
                   <!-- <h4> Available variant: {{ category.count }} </h4> -->
                 </ion-label>
@@ -50,7 +47,7 @@
         </ion-list>
 
         <div *ngIf="cart.length !== 0">
-          <ion-button expand="full" [routerLink]="['/home/cart/checkout']">PAY</ion-button>
+          <ion-button expand="full" [routerLink]="['/cart/checkout']">PAY</ion-button>
         </div>
       </ion-col>
     </ion-row>

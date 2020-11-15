@@ -1,0 +1,35 @@
+.img {
+    // border: 1px solid #ddd; /* Gray border */
+    // border-radius: 4px;  /* Rounded border */
+    padding: 5px; /* Some padding */
+    object-fit: cover;
+    width: 100%; /* Set a small width */
+    height: 150px;
+  }
+  .stk{
+    // border-radius: 20%;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index:10;
+  }
+
+  ion-segment {
+    // display: block;
+    // white-space: nowrap;
+    // font-size: 0;
+    // overflow: auto;
+
+    // &::-webkit-scrollbar {
+    //     width: 0;
+    //     height: 0;
+    //     display: none;
+    // }
+    overflow: auto;
+
+    ion-segment-button.segment-button {
+        display: inline-block;
+        min-width: 100px;
+        width: auto;
+    }
+}
