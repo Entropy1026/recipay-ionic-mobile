@@ -27,6 +27,7 @@ import { Push } from '@ionic-native/push/ngx';
 import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SMS } from '@ionic-native/sms';
+import { IonicStorageModule } from '@ionic/storage';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SMS } from '@ionic-native/sms';
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    IonicStorageModule.forRoot() // Add this
   ],
   providers: [
     StatusBar,

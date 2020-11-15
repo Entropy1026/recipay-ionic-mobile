@@ -7,6 +7,8 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import * as firebase from 'firebase';
+import { Storage } from '@ionic/storage';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +21,7 @@ export class LoginPage implements OnInit {
   password: string;
   loading;
   isLoggedIn = false;
+  user: User;
   // users = { id: '', name: '', email: '', picture: { data: { url: '' } } };
   // user
 
@@ -32,11 +35,22 @@ export class LoginPage implements OnInit {
     private router: Router,
     private fb: Facebook,
     public afAuth: AngularFireAuth,
+    private storage: Storage
   ) {
+    this.storage.get('hasLoggedin').then((val) => {
+      if (val) {
+        this.loadingCtrl.create({
+          message: 'Signing in...'
+        }).then(overlay => {
+          this.loading = overlay;
+          overlay.present();
+        });
+        this.setUser();
+      }
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.menuCtrl.swipeGesture(false);
@@ -98,6 +112,21 @@ export class LoginPage implements OnInit {
             // this.userService.setPassword(this.password.trim());
             this.router.navigate(['/category']);
           }
+
+          // set storage
+          this.storage.set('hasLoggedin', true);
+
+          this.storage.set('username', res.data.username);
+          this.storage.set('firstname', res.data.firstname);
+          this.storage.set('lastname', res.data.lastname);
+          this.storage.set('middlename', res.data.middlename);
+          this.storage.set('mobile', res.data.mobile);
+          this.storage.set('email', res.data.email);
+          this.storage.set('image', res.data.image);
+          this.storage.set('id', res.data.id);
+          this.storage.set('user_type', res.data.user_type);
+          this.storage.set('password', res.data.password);
+
         }
       },
         (err) => {
@@ -130,6 +159,7 @@ export class LoginPage implements OnInit {
 
       setTimeout(() => {
         this.recipayApi.login(params).subscribe(res => {
+          console.log(res.data);
           if (res.error) {
             this.alertCtrl.create({
               message: res.message,
@@ -147,6 +177,20 @@ export class LoginPage implements OnInit {
               this.userService.setUser(res.data);
               this.router.navigate(['/carrier']);
             }
+
+            // set storage
+            this.storage.set('hasLoggedin', true);
+            this.storage.set('username', res.data.username);
+            this.storage.set('firstname', res.data.firstname);
+            this.storage.set('lastname', res.data.lastname);
+            this.storage.set('middlename', res.data.middlename);
+            this.storage.set('mobile', res.data.mobile);
+            this.storage.set('email', res.data.email);
+            this.storage.set('image', res.data.image);
+            this.storage.set('id', res.data.id);
+            this.storage.set('user_type', res.data.user_type);
+            this.storage.set('password', res.data.password);
+
           }
         },
           (err) => {
@@ -166,15 +210,15 @@ export class LoginPage implements OnInit {
 
   fbLogin() {
     this.fb.login(['public_profile', 'user_friends', 'email'])
-    .then(res => {
-      if (res.status === 'connected') {
-        // this.isLoggedIn = true;
-        this.getUserDetail(res.authResponse.userID);
-      } else {
-        this.isLoggedIn = false;
-      }
-    })
-    .catch(e => console.log('Error logging into Facebook', e));
+      .then(res => {
+        if (res.status === 'connected') {
+          // this.isLoggedIn = true;
+          this.getUserDetail(res.authResponse.userID);
+        } else {
+          this.isLoggedIn = false;
+        }
+      })
+      .catch(e => console.log('Error logging into Facebook', e));
   }
 
   getUserDetail(userid: any) {
@@ -199,6 +243,55 @@ export class LoginPage implements OnInit {
       .catch(e => {
         console.log(e);
       });
+  }
+
+  private async setUser() {
+    let id = null;
+    let firstname = null;
+    let lastname = null;
+    let middlename = null;
+    let username = null;
+    let user_type = null;
+    let email = null;
+    let image = null;
+    let mobile = null;
+    id = await this.storage.get('id');
+    firstname = await this.storage.get('firstname');
+    lastname = await this.storage.get('lastname');
+    middlename = await this.storage.get('middlename');
+    username = await this.storage.get('username');
+    user_type = await this.storage.get('user_type');
+    email = await this.storage.get('email');
+    image = await this.storage.get('image');
+    mobile = await this.storage.get('mobile');
+
+    this.storage.get('password').then((val) => {
+      this.userService.setPassword(val);
+    });
+
+    this.user = {
+      id,
+      firstname,
+      lastname,
+      middlename,
+      username,
+      user_type,
+      email,
+      image,
+      mobile,
+    };
+
+    this.userService.setUser(this.user);
+    if (this.user.user_type === 'client') {
+      this.router.navigate(['/category']);
+    }
+    if (this.user.user_type === 'carrier') {
+      this.router.navigate(['/carrier']);
+    }
+    if (this.user.user_type === 'fb-client') {
+      this.router.navigate(['/category']);
+    }
+    this.loading.dismiss();
   }
 
   validate() {

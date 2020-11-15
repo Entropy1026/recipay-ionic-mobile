@@ -73,7 +73,7 @@ export class CheckoutPage implements OnInit {
       this.totalPayment = Number(this.amount) + Number(this.billingCity.value);
       this.payPal.init({
         PayPalEnvironmentProduction: '',
-        PayPalEnvironmentSandbox: 'AcUhzh4QgC4F80bhfHgKe8XfEmB6Fbs9CSx9SyjAtYiVdx0Q6sy0hrLKf-8oimoXcY2qHNkprNHhKA0A'
+        PayPalEnvironmentSandbox: 'AeFsN2obGsN-z6F9p22YSrHRyxH3mRIJmFgvb1mX2HgG3YaInD7tS4Mk5iH0RATNrm7ghvm52LTdfWYt'
       }).then(() => {
         // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
         this.payPal.prepareToRender('PayPalEnvironmentSandbox', new PayPalConfiguration({

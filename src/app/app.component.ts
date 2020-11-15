@@ -12,7 +12,7 @@ import * as firebase from 'firebase';
 import { RecipayApiService } from './client/api/recipay-api.service';
 import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { PhonegapLocalNotification } from '@ionic-native/phonegap-local-notification/ngx';
-
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -32,12 +32,20 @@ export class AppComponent implements OnInit {
     private router: Router,
     private recipayApi: RecipayApiService,
     private push: Push,
-    private localNotification: PhonegapLocalNotification
+    private localNotification: PhonegapLocalNotification,
+    private storage: Storage
   ) {
     this.initializeApp();
   }
 
   ngOnInit() {
+
+    this.storage.get('hasLoggedin').then((val) => {
+      if (val) {
+        this.setUser();
+      }
+    });
+
     this.userService.getUser.subscribe(user => {
       this.user = user;
     });
@@ -94,8 +102,8 @@ export class AppComponent implements OnInit {
               pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
               console.log(data.message);
               this.localNotification.create('Order Notification', {
-                tag:  '' + data.message,
-                body: '' + data.message ,
+                tag: '' + data.message,
+                body: '' + data.message,
                 icon: '../assets/img/recipaylogo.png'
               });
 
@@ -136,6 +144,45 @@ export class AppComponent implements OnInit {
     });
   }
 
+  private async setUser() {
+    let id = null;
+    let firstname = null;
+    let lastname = null;
+    let middlename = null;
+    let username = null;
+    let user_type = null;
+    let email = null;
+    let image = null;
+    let mobile = null;
+    id = await this.storage.get('id');
+    firstname = await this.storage.get('firstname');
+    lastname = await this.storage.get('lastname');
+    middlename = await this.storage.get('middlename');
+    username = await this.storage.get('username');
+    user_type = await this.storage.get('user_type');
+    email = await this.storage.get('email');
+    image = await this.storage.get('image');
+    mobile = await this.storage.get('mobile');
+
+    this.storage.get('password').then((val) => {
+      this.userService.setPassword(val);
+    });
+
+    this.user = {
+      id,
+      firstname,
+      lastname,
+      middlename,
+      username,
+      user_type,
+      email,
+      image,
+      mobile,
+    };
+
+    this.userService.setUser(this.user);
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -146,6 +193,17 @@ export class AppComponent implements OnInit {
   onClickLogout() {
     this.userService.setUser(null);
     this.userService.setPassword(null);
+    this.storage.set('hasLoggedin', false);
+    this.storage.set('username', null);
+    this.storage.set('firstname', null);
+    this.storage.set('lastname', null);
+    this.storage.set('middlename', null);
+    this.storage.set('mobile', null);
+    this.storage.set('email', null);
+    this.storage.set('image', null);
+    this.storage.set('id', null);
+    this.storage.set('user_type', null);
+    this.storage.set('password', null);
     firebase.auth().signOut().then(() => {
       // Sign-out successful.
     }).catch((error) => {
